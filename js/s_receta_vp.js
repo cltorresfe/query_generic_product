@@ -20,7 +20,7 @@ $(document).ready(function(){
   $("#product").autocomplete({                   
           source:
               function( request, response ) {
-                 $.getJSON( "search.php", {
+                 $.getJSON( "search_product.php", {
                                    term: request.term
                  }, response );
           },

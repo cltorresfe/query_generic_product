@@ -1,7 +1,3 @@
-<?php
-  
-  include("search.php"); 
-?>
 <!doctype html>
 <html>
   <head>
