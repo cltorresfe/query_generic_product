@@ -1,6 +1,6 @@
 <?php  
   $db_database = 'dbsome';
-  $db_hostname = '10.6.87.150:3306';
+  $db_hostname = '10.6.87.150';
   $db_username = 'administrador';
   $db_password = 'c35famcvp';
 

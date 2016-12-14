@@ -6,6 +6,7 @@
       <input type="hidden" id="product_id" />
     
     <input id="composicion" name="comp" id="comp" type="text" placeholder="composición" style="width: 70px" >
+    cada
     <select name="hora" id="hour">
       <option value="2">2 hrs.</option>
       <option value="4">4 hrs.</option>
@@ -13,7 +14,7 @@
       <option value="8">8 hrs.</option>
       <option value="12">12 hrs.</option>
       <option value="24">24 hrs.</option>
-    </select>
+    </select>por
     <input id="days" name="days" type="text" placeholder="días" style="width: 50px" value="">
     <div class="btn btn-info btn-sm" id="add_product">Agregar</div>
     </div>

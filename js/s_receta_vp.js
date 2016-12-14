@@ -7,9 +7,9 @@ $(document).ready(function(){
       var hour_product= $("#hour").val();
       var days_product= $("#days").val();
       var total = comp_product*(24/hour_product)*days_product;
-      var row_product = "Medicamento: "+name_product_select+"  Composición: "+comp_product+"  - "+
-        hour_product+ " cada "+days_product+" días"+
-        "   Total: "+total+"\n";
+      var row_product = name_product_select+"\n"+comp_product+" CADA "+
+        hour_product+ " HORAS POR "+days_product+" DIAS\n"+
+        "TOTAL: "+total+"\n";
       $('#obs').append(row_product);
       $('#product').attr("placeholder", "buscar producto").val("").focus().blur();
       $('#composicion').attr("placeholder", "composición").val("").focus().blur();
