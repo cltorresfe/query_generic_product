@@ -7,10 +7,12 @@
     while ($row = $result->fetch_assoc()) {
         $nombre = $row["nombre"];
         $codigo_producto = $row["codigo_producto"];
+        $stock = $row["cantidad"];
         $data[] = array( 
             'label' => $nombre, 
             'codigo_producto' => $codigo_producto,                                   
-            'value' => $nombre
+            'value' => $nombre,
+            'stock' => $stock
             );
     }
     echo json_encode($data);

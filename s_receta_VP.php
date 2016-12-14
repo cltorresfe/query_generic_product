@@ -15,6 +15,7 @@ fclose($myfile);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DOCUMENTO DE ATENCION URGENCIA (DAU)</title>
 <link href="../../recursos/estilo/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../../recursos/estilo/css/jquery-ui-1.8.2.custom.css" type="text/css" media="all"/>
 <script src="../../recursos/jquery/jquery-1.4.2.js"></script>
 <script src="s_funciones.js<?php echo '?'.$version;?>"></script>
 <script type="text/javascript" src="../../recursos/js/s_receta_vp.js"></script>   

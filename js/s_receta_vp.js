@@ -29,7 +29,10 @@ $(document).ready(function(){
              function(event, ui) { 
                   var codigo_producto = ui.item ? ui.item.codigo_producto : '';
                   $("#product_id").val(ui.item.codigo_producto);
+                  $("#product_stock").html("stock: "+ui.item.stock);
                   name_product = ui.item.value;
              }
         });
 });
+
+
