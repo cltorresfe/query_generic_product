@@ -1,0 +1,35 @@
+$(document).ready(function(){
+  var name_product = '';
+  $('#add_product').click(function(){
+    var name_product_select= $("#product").val();
+    if($("#product_id").val() != '' && name_product == name_product_select ){
+      var comp_product= $("#composicion").val();
+      var hour_product= $("#hour").val();
+      var days_product= $("#days").val();
+      var total = comp_product*(24/hour_product)*days_product;
+      var row_product = "Medicamento: "+name_product_select+"  Composición: "+comp_product+"  - "+
+        hour_product+ " cada "+days_product+" días"+
+        "   Total: "+total+"\n";
+      $('#obs').append(row_product);
+      $('#product').attr("placeholder", "buscar producto").val("").focus().blur();
+      $('#composicion').attr("placeholder", "composición").val("").focus().blur();
+      $('#days').attr("placeholder", "días").val("").focus().blur();
+    }
+  });
+
+  $("#product").autocomplete({                   
+          source:
+              function( request, response ) {
+                 $.getJSON( "search.php", {
+                                   term: request.term
+                 }, response );
+          },
+          minLength: 4,
+          select:
+             function(event, ui) { 
+                  var codigo_producto = ui.item ? ui.item.codigo_producto : '';
+                  $("#product_id").val(ui.item.codigo_producto);
+                  name_product = ui.item.value;
+             }
+        });
+});

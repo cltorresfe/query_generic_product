@@ -1,30 +1,23 @@
+<?php
+  
+  include("search.php"); 
+?>
 <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Autocomplete</title>
-    <script>
-      $(function() { 
-        $("#products").autocomplete({                   
-          source:
-              function( request, response ) {
-                 $.getJSON( "search.php", {
-                                   term: request.term
-                 }, response );
-          },
-          minLength: 4
-        });  
-       });
-    </script>
   </head>
   <body>
    
     <div><br>
       <form id= "new_product_form">
-        <div id="new_product">
-        <label for="products">Productos: </label>
-        <input id="products" class="products" name="product" type="text" placeholder="buscar producto" style="width: 40%">
-        <input id="composicion" name="comp" id="comp" type="text" placeholder="por composición">
+        <div class="ui-widget">
+          <label for="product">Productos: </label>
+          <input id="product" class="product" name="product" type="text" placeholder="buscar producto" style="width: 40%">
+          <input type="hidden" id="product_id" />
+        
+        <input id="composicion" name="comp" id="comp" type="text" placeholder="composición" style="width: 70px" >
         <select name="hora" id="hour">
           <option value="2">2 hrs.</option>
           <option value="4">4 hrs.</option>

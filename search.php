@@ -1,5 +1,5 @@
 <?php
-    include("conexion.php");
+    include("conexion_bd_vp.php");
     //get search term
     $searchTerm = $_GET['term'];
     // $query = "SELECT p.Id, p.codigo_producto as codigo, p.nombre as nombre, p.estado as estado FROM producto_generico p JOIN stock s ON s.codigo_producto = p.Id WHERE estado = 1 and s.cantidad > 10"; 
