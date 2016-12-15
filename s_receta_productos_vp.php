@@ -1,48 +1,38 @@
   <br>
-  <form id= "new_product_form" class="form-horizontal" data-toggle="validator" role="form">
-    <div class="form-group ">
-      <div class="ui-widget ">
-        <label for="product" class="col-sm-1 col-sm-offset-1 control-label">Productos: </label>
-        <div class="col-sm-5">
-          <input id="product" class="form-control" name="product" type="text" placeholder="buscar producto" required>
-          <input type="hidden" id="product_id" required>
-          <div id="product_stock" class="badge" 
-            style="position: absolute;top: 25px;left: 97%;background-color: #a1471b !important;"></div>
-        </div>
-        <label for="product" class="col-sm-2 control-label">Vía Adm.: </label>
-        <div class="col-sm-2">
-          <select name="via" id="via" class="form-control">
-            <option value="Vía Oral">VO</option>
-            <option value="IM">IM</option>
-            <option value="Intra Venoso">IV</option>
-            <option value="SC">SC</option>
-          </select>
-        </div>
+  <form id= "new_product_form" class="form-inline" data-toggle="validator" role="form">
+      <div class="form-group">
+            <input id="product" class="form-control" name="product" type="text" placeholder="Ingrese Medicamento" style="width: 280px;" required>
+            <input type="hidden" id="product_id">
+            <div id="product_stock" class="badge" style="background-color: #a1471b !important;"></div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="product" class="col-sm-2 col-sm-offset-1 control-label">Frecuencia: </label>
-      <div class="col-sm-2">
-        <input id="composicion" class="form-control" name="comp" type="text" placeholder="composición"data-validate="true" required>
+      <div class="form-group">
+          <label class="control-label">Vía Adm.: </label>
+            <select name="via" id="via" class="form-control" style="width: 60px;">
+              <option value="Vía Oral" selected>VO</option>
+              <option value="IM">IM</option>
+              <option value="Intra Venoso">IV</option>
+              <option value="SC">SC</option>
+            </select>
       </div>
-      <label class="col-sm-1 control-label">Cada: </label>
-      <div class="col-sm-2">
-        <select name="hora" id="hour" class="form-control">
+      <div class="form-group">
+          <input id="composicion" class="form-control" name="comp" min="1" type="number" placeholder="composición" style="width: 60px;" required>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Cada: </label>
+        <select name="hora" id="hora" class="form-control" style="width: 60px;">
           <option value="2">2 hrs.</option>
           <option value="4">4 hrs.</option>
           <option value="6">6 hrs.</option>
-          <option value="8">8 hrs.</option>
+          <option value="8" selected>8 hrs.</option>
           <option value="12">12 hrs.</option>
           <option value="24">24 hrs.</option>
-        </select> 
+        </select>
       </div>
-      <label class="col-sm-1 control-label">Por: </label>
-      <div class="col-sm-2">
-        <input id="days" class="form-control" name="days" type="text" placeholder="días" style="width: 100%" required>
+      <div class="form-group">
+        <label class="control-label">Por: </label>
+          <input id="days" class="form-control" name="days" type="number" min="1" placeholder="días" style="width: 60px;" required>
       </div>
-      <div class="row col-sm-12 control-label">
-          <div class="btn btn-info btn-sm" id="add_product" style="width: 97%">Agregar</div>
-      </div>
-      
-    </div>
+      <div class="control-label">
+        <button class="btn btn-info btn-sm" id="add_product" style="width: 100%">Agregar</button>
+      </div> 
   </form>

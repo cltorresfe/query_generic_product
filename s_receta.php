@@ -9,6 +9,7 @@
 <script type="text/javascript" src="js/s_receta_vp.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>   
 <script type="text/javascript" src="js/jquery-ui-1.11.4.min.js"></script>
+<script type="text/javascript" src="js/validator.min.js"></script>
 
 </head>
 	<body>

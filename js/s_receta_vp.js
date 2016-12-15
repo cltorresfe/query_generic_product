@@ -4,7 +4,7 @@ $(document).ready(function(){
     var name_product_select= $("#product").val();
     if($("#product_id").val() != '' && name_product == name_product_select ){
       var comp_product= $("#composicion").val();
-      var hour_product= $("#hour").val();
+      var hour_product= $("#hora").val();
       var days_product= $("#days").val();
       var total = comp_product*(24/hour_product)*days_product;
       var row_product = name_product_select+"\n"+comp_product+" CADA "+
@@ -37,4 +37,7 @@ $(document).ready(function(){
         });
 });
 
-
+$(document).on('click','#add_product',function(event){
+  $( "#new_product_form" ).submit();
+ return false;
+});
