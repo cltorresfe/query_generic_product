@@ -4,7 +4,6 @@
       <div class="form-group">
             <input id="product" class="form-control" name="product" type="text" placeholder="Ingrese Medicamento" style="width: 280px;" aria-describedby="inputSuccess2Status" required>
             <input type="hidden" id="product_id">
-            <div id="product_stock" class="badge"></div>
       </div>
       
       <div class="form-group">
@@ -32,8 +31,11 @@
       </div>
       <div class="form-group">
         <label class="control-label">Por: </label>
-          <input id="days" class="form-control" name="days" type="number" min="1" placeholder="días" style="width: 60px;" required>
+        <input id="days" class="form-control" name="days" type="number" min="1" placeholder="días" style="width: 60px;" required>
       </div>
+    </div>
+    <div style="position: relative; top: -6px;text-align: center;">
+     <div id="product_stock" class="badge"></div>
     </div>
     <div class="form-inline">
       <div class="control-label">
