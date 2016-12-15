@@ -2,14 +2,20 @@ $(document).ready(function(){
   var name_product = '';
   $('#add_product').click(function(){
     var name_product_select= $("#product").val();
-    if($("#product_id").val() != '' && name_product == name_product_select ){
-      var comp_product= $("#composicion").val();
-      var hour_product= $("#hora").val();
-      var days_product= $("#days").val();
+    var bandera = true;
+    var comp_product= $("#composicion").val();
+    var hour_product= $("#hora").val();
+    var days_product= $("#days").val();
+    var via_product= $("#via").val();
+    if(comp_product == '' || comp_product < 1)bandera = false;
+    if(days_product == '' || days_product < 1)bandera = false;
+    if($("#product_id").val() == '' || name_product != name_product_select )bandera = false;
+    if( bandera ){
+      
       var total = comp_product*(24/hour_product)*days_product;
       var row_product = name_product_select+"\n"+comp_product+" CADA "+
         hour_product+ " HORAS POR "+days_product+" DIAS\n"+
-        "TOTAL: "+total+"\n";
+        "VIA: "+via_product+"\n"+"TOTAL: "+total+"\n";
       $('#obs').append(row_product);
       $('#product').attr("placeholder", "buscar producto").val("").focus().blur();
       $('#composicion').attr("placeholder", "composición").val("").focus().blur();
