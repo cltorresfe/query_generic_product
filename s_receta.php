@@ -3,11 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DOCUMENTO DE ATENCION URGENCIA (DAU)</title>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/jquery-ui-1.8.2.custom.css" type="text/css" media="all"/>
-<script src="js/jquery-1.4.2.js"></script> 
-<script type="text/javascript" src="js/s_receta_vp.js"></script>   
-<script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script>
+<link href="css/bootstrap-3.3.7.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/jquery-ui-1.11.4.min.css" type="text/css" media="all"/>
+<script src="js/jquery-1.12.3.min.js"></script> 
+<script type="text/javascript" src="js/s_receta_vp.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/jquery-ui-1.11.4.min.js"></script>
 
 </head>
 	<body>

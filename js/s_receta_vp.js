@@ -14,6 +14,8 @@ $(document).ready(function(){
       $('#product').attr("placeholder", "buscar producto").val("").focus().blur();
       $('#composicion').attr("placeholder", "composición").val("").focus().blur();
       $('#days').attr("placeholder", "días").val("").focus().blur();
+      $("#product_stock").html("");
+      $("#new_product_form").validator('update');
     }
   });
 
@@ -29,7 +31,7 @@ $(document).ready(function(){
              function(event, ui) { 
                   var codigo_producto = ui.item ? ui.item.codigo_producto : '';
                   $("#product_id").val(ui.item.codigo_producto);
-                  $("#product_stock").html("stock: "+ui.item.stock);
+                  $("#product_stock").html("stock:"+ui.item.stock);
                   name_product = ui.item.value;
              }
         });
