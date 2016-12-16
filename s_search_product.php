@@ -1,13 +1,11 @@
 <?php
     include("conexion_bd_vp.php");
-    //get search term
-    $searchTerm = $_GET['term'];
-    // $query = "SELECT p.Id, p.codigo_producto as codigo, p.nombre as nombre, p.estado as estado FROM producto_generico p JOIN stock s ON s.codigo_producto = p.Id WHERE estado = 1 and s.cantidad > 10"; 
-    $result = $mysqli->query("SELECT * FROM producto_generico p JOIN stock s ON s.codigo_producto = p.Id WHERE nombre LIKE '%".$searchTerm."%' AND s.cantidad > 10 ORDER BY nombre ASC");
+    $query = "SELECT p.nombre as nombre, p.codigo_producto as codigo_producto, s.cantidad as cantidad FROM producto_generico p JOIN stock s ON s.codigo_producto = p.Id WHERE s.cantidad > 0 ORDER BY nombre ASC";
+    $result = $mysqli->query($query);
     while ($row = $result->fetch_assoc()) {
-        $nombre = $row["nombre"];
-        $codigo_producto = $row["codigo_producto"];
-        $stock = $row["cantidad"];
+        $nombre = utf8_encode($row["nombre"]);
+        $codigo_producto = utf8_encode($row["codigo_producto"]);
+        $stock = utf8_encode($row["cantidad"]);
         $data[] = array( 
             'label' => $nombre, 
             'codigo_producto' => $codigo_producto,                                   

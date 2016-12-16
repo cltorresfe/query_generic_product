@@ -2,7 +2,7 @@
   <form id= "new_product_form" data-toggle="validator" role="form">
     <div class="form-inline" style="position: relative; top: -8px;text-align: center;">
       <div class="form-group">
-            <input id="product" class="form-control" name="product" type="text" placeholder="Ingrese Medicamento" style="width: 280px;" aria-describedby="inputSuccess2Status" required>
+            <input id="product" class="form-control" name="product" type="text" placeholder="Ingrese Medicamento" style="width: 280px;" required>
             <input type="hidden" id="product_id">
       </div>
       
@@ -10,9 +10,9 @@
           <label class="control-label">Vía Adm.: </label>
             <select name="via" id="via" class="form-control" style="width: 60px;">
               <option value="VIA ORAL" selected>VO</option>
-              <option value="IM">IM</option>
-              <option value="INTRAVENOSE">IV</option>
-              <option value="SC">SC</option>
+              <option value="INTRAMUSCULAR">IM</option>
+              <option value="INTRAVENOSA">IV</option>
+              <option value="SUBCUTANEA">SC</option>
             </select>
       </div>
       <div class="form-group">
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div style="position: relative; top: -6px;text-align: center;">
-     <div id="product_stock" class="badge"></div>
+     <div id="product_stock"></div>
     </div>
     <div class="form-inline">
       <div class="control-label">

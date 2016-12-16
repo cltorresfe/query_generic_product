@@ -1,5 +1,7 @@
 $(document).ready(function(){
   var name_product = '';
+  var total = 0;
+  var stock = 0;
   $('#add_product').click(function(){
     var name_product_select= $("#product").val();
     var bandera = true;
@@ -10,9 +12,8 @@ $(document).ready(function(){
     if(comp_product == '' || comp_product < 1)bandera = false;
     if(days_product == '' || days_product < 1)bandera = false;
     if($("#product_id").val() == '' || name_product != name_product_select )bandera = false;
-    if( bandera ){
-      
-      var total = comp_product*(24/hour_product)*days_product;
+    if( bandera ){      
+      total = comp_product*(24/hour_product)*days_product;
       var row_product = name_product_select+"\n"+comp_product+" CADA "+
         hour_product+ " HORAS POR "+days_product+" DIAS\n"+
         "VIA: "+via_product+"\n"+"TOTAL: "+total+"\n";
@@ -25,22 +26,44 @@ $(document).ready(function(){
     }
   });
 
+   var items = [];
+  $.getJSON( "s_search_product.php", function( data ) {
+    $.each( data, function( key, val ) {
+      items.push(val);
+    });
+});
+
   $("#product").autocomplete({                   
-          source:
-              function( request, response ) {
-                 $.getJSON( "s_search_product.php", {
-                                   term: request.term
-                 }, response );
-          },
+          source: items,
           minLength: 4,
           select:
              function(event, ui) { 
                   var codigo_producto = ui.item ? ui.item.codigo_producto : '';
                   $("#product_id").val(ui.item.codigo_producto);
-                  $("#product_stock").html("stock:"+ui.item.stock);
                   name_product = ui.item.value;
+                  stock= ui.item.stock;
              }
-        });
+        })
+        .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+              .append( "<div>" + item.label + " (Stock: " + item.stock + "   )</div>" )
+              .appendTo( ul );
+        };
+  $('#days').bind('keyup', function (){
+    var name_product_select= $("#product").val();
+    var comp_product= $("#composicion").val();
+    var hour_product= $("#hora").val();
+    var days_product= $("#days").val();
+    bandera = true;
+    if(comp_product == '' || comp_product < 1)bandera = false;
+    if(days_product == '' || days_product < 1)bandera = false;
+    if($("#product_id").val() == '' || name_product != name_product_select )bandera = false;
+    if( bandera ){ 
+      total = comp_product*(24/hour_product)*days_product;
+      if(total>stock)$("#product_stock").html("<div class='btn btn-warning btn-xs'>Total: "+total+" - Stock: "+stock+"</div>");
+      else $("#product_stock").html("<div class='btn btn-success btn-xs'>Total: "+total+" - Stock: "+stock+"</div>");
+    }
+  });
 });
 
 $(document).on('click','#add_product',function(event){
