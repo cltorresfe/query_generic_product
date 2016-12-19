@@ -5,9 +5,8 @@
             <input id="product" class="form-control" name="product" type="text" placeholder="Ingrese Medicamento" style="width: 280px;" required>
             <input type="hidden" id="product_id">
       </div>
-      
       <div class="form-group">
-          <label class="control-label">Vía Adm.: </label>
+          <label class="control-label">Vía: </label>
             <select name="via" id="via" class="form-control" style="width: 60px;">
               <option value="VIA ORAL" selected>VO</option>
               <option value="INTRAMUSCULAR">IM</option>
