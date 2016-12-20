@@ -162,7 +162,7 @@ function validacionCampoTexto(valor){
 
 		<div class="form-inline row">
 			<div class="form-group col-sm-3">
-				<label for="estadoEtilico" class="control-label col-sm-12">Estado etílico:</label>
+				<label for="estadoEtilico" class="control-label">Estado etílico:</label>
 				<select name="estadoEtilico" id="estadoEtilico" class="form-control"> 
 					<?php 
 						$sql1 = "Select cod_e_etilico,descripcion_e_etilico From eme_dau_estado_etilico where registroactivo=1 order by cod_e_etilico";
@@ -180,22 +180,22 @@ function validacionCampoTexto(valor){
 		    </select>
 			</div>
 			<div class="form-group col-sm-3">
-				<label for="nroFracoAlcoholemia" class="control-label col-sm-12">Nº frasco alcoholemia</label>
+				<label for="nroFracoAlcoholemia" class="control-label">Nº frasco alcoholemia</label>
 				<input class="form-control" type="text" id="nroFracoAlcoholemia">
 			</div>
 			<div class="form-group col-sm-3">
-				<label for="parteOH" class="control-label col-sm-12">N° Parte:</label>
+				<label for="parteOH" class="control-label">N° Parte:</label>
 				<input class="form-control col-sm-12" type="text" id="parteOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
 			<div class="form-group col-sm-3">
-				<label for="unidad_policia" class="control-label col-sm-12">Unidad Policial:</label>
+				<label for="unidad_policia" class="control-label">Unidad Policial:</label>
 				<input class="form-control col-sm-12" type="text" id="unidad_policia" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
 				<div class="help-block with-errors col-sm-12"></div>
 			</div>
 		</div>
 		<div class="form-inline row">
 			<div class="form-group col-sm-3">
-				<label for="gradoLesion" class="control-label col-sm-12">Pronóstico médico-legal:</label>
+				<label for="gradoLesion" class="control-label">Pronóstico médico-legal:</label>
 				<select name="gradoLesion" id="gradoLesion" class="form-control"> 
 					<?php 
 						$sql2 = "Select cod_grado,descripcion_lesion From eme_dau_atencion_grado_lesion where registroactivo=1 order by cod_grado";
@@ -213,52 +213,49 @@ function validacionCampoTexto(valor){
 	      </select>
 			</div>
 			<div class="form-group col-sm-3">
-				<label for="juzgado" class="control-label col-sm-12">Juzgado:</label>
+				<label for="juzgado" class="control-label">Juzgado:</label>
 				<input class="form-control" type="text" id="juzgado" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
 
 			<div class="form-group col-sm-3">
-				<label for="condicion_transito" class="control-label col-sm-12">Condicion en el Transito:</label>
-				<select name="condicion_transito" id="condicion_transito" class="form-control" <?php if($codInst != 10){echo 'disabled'; } ?>>
+				<label for="condicion_transito" class="control-label">Condición Tránsito:</label>
+				<select name="condicion_transito" id="condicion_transito" class="form-control " <?php if($codInst != 10){echo 'disabled'; } ?>>
 					<option value="7">Peatón</option>
 					<option value="0">Conductor</option>
 					<option value="5">Otro</option>
 				</select>
 			</div>
 			<div class="form-group col-sm-3">
-				<label for="placa_policia" class="control-label col-sm-12">N° Placa:</label>
+				<label for="placa_policia" class="control-label">N° Placa:</label>
 				<input class="form-control" type="text" id="placa_policia" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
 				<div class="help-block with-errors"></div>
 			</div>
 		</div>
 		<div class="form-inline row">
-			<div class="form-group col-sm-3" style="padding-left: 50px !important">
+			<div class="form-group col-sm-3">
 				<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
 
 				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
 
 				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
 			</div>
-			<div class="form-group col-sm-3">
+			<div class="form-group col-sm-9">
 				<label for="observacionOH" class="control-label col-sm-12">Observaciones Alcoholemia:</label>
 				<input class="form-control" type="text" id="observacionOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
 		</div>
 		<div class="form-group col-sm-12">
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
+			<script> 
+				fn_carga_tabla_signos_vitales();
+			</script>
 		</div>
-		<div id="resultado" class="resutlado"/>
 	</form>
-	
-	
-
-
+	<div id="resultado" class="row" align="center" />
 
 </div>
 </body>
-<script> 
-	fn_carga_tabla_signos_vitales();
-</script>
+
 </html>
 <?php
 mysql_close($con);
