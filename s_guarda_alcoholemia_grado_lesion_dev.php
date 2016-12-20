@@ -1,5 +1,5 @@
 <?php
-include_once("conexion/conexion.php");
+include_once("conexion/conexion_sig_vitales.php");
 
 $cod_atencion = $_POST['a'];
 $codEstadoEtilico = $_POST['ee'];
