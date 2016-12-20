@@ -34,7 +34,7 @@ $(document).ready(function(){
               .appendTo( ul );
         };
 
-  $('#days').bind('keyup', function (){
+  $('#days').bind('click keyup', function (){
     if( validate_form() ){
       total = comp_product*(24/hour_product)*days_product;
       if(total>stock)$("#product_stock").html("<div class='btn btn-warning btn-xs'>Total: "+total+" - Stock: "+stock+"</div>");
@@ -45,18 +45,20 @@ $(document).ready(function(){
 
 $(document).on('click','#add_product',function(event){
   bandera = validate_form();
+  var obs= $("#obs").val();
+
   if( bandera ){
     total = comp_product*(24/hour_product)*days_product;
     var row_product = name_product_select+"\n"+comp_product+" CADA "+
-      hour_product+ " HORAS POR "+days_product+" DIAS\n"+
-      "VIA: "+via_product+"\n"+"TOTAL: "+total+"\n";
-    $('#obs').append(row_product);
+      hour_product+ " HORAS POR "+days_product+" DIAS "+
+      via_product+"\n"+"TOTAL: "+total+"\n";
+    $('#obs').val($('#obs').val()+row_product +' ').focus();
+    //$('#obs').append(obs+row_product);
     $('#product').attr("placeholder", "buscar producto").val("").focus().blur();
-    $('#composicion').attr("placeholder", "composición").val("").focus().blur();
+    $('#composicion').attr("placeholder", "cantidad").val("").focus().blur();
     $('#days').attr("placeholder", "días").val("").focus().blur();
     $("#product_stock").html("");
     $( "#new_product_form" ).submit();
-    $("#new_product_form").validator('update');
   }
 
  return false;

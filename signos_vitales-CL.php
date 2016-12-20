@@ -142,149 +142,118 @@ function validacionCampoTexto(valor){
 						}
 						mysql_free_result($result0);
 					?>
+			
+
+
+
+
+
+
+
+
+
+
+
+
 					
 					
 	<strong>Accidente y Alcoholemia:</strong>
 	<form id="sv_form" data-toggle="validator" role="form">
+
 		<div class="form-inline row">
-			<div class="form-group col-sm-4">
-				<label for="nroFracoAlcoholemia" class="control-label col-sm-12">Nº frasco alcoholemia</label>
-				<input class="form-control" type="number" id="nroFracoAlcoholemia" min="1" required>
+			<div class="form-group col-sm-3">
+				<label for="estadoEtilico" class="control-label col-sm-12">Estado etílico:</label>
+				<select name="estadoEtilico" id="estadoEtilico" class="form-control"> 
+					<?php 
+						$sql1 = "Select cod_e_etilico,descripcion_e_etilico From eme_dau_estado_etilico where registroactivo=1 order by cod_e_etilico";
+						echo '<option value="0">Selec. estado</option>';
+						$result1 = mysql_query($sql1);
+						while ($row1=mysql_fetch_array($result1)){	
+			            	if ($codEstadoEtilico == $row1[0]){
+			                	echo '<option value="'.$row1[0].'" selected="selected">'.$row1[1].'</option>';
+			                }else{
+				                echo '<option value="'.$row1[0].'">'.$row1[1].'</option>';
+				            }
+				        }
+						mysql_free_result($result1);
+		       ?>
+		    </select>
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
+				<label for="nroFracoAlcoholemia" class="control-label col-sm-12">Nº frasco alcoholemia</label>
+				<input class="form-control" type="text" id="nroFracoAlcoholemia">
+			</div>
+			<div class="form-group col-sm-3">
 				<label for="parteOH" class="control-label col-sm-12">N° Parte:</label>
 				<input class="form-control col-sm-12" type="text" id="parteOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
-			<div class="form-group col-sm-4">
+			<div class="form-group col-sm-3">
 				<label for="unidad_policia" class="control-label col-sm-12">Unidad Policial:</label>
-				<input class="form-control col-sm-12" type="text" id="unidad_policia" <?php if($codInst != 10){echo 'disabled'; } ?> />
+				<input class="form-control col-sm-12" type="text" id="unidad_policia" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
+				<div class="help-block with-errors col-sm-12"></div>
+			</div>
+		</div>
+		<div class="form-inline row">
+			<div class="form-group col-sm-3">
+				<label for="gradoLesion" class="control-label col-sm-12">Pronóstico médico-legal:</label>
+				<select name="gradoLesion" id="gradoLesion" class="form-control"> 
+					<?php 
+						$sql2 = "Select cod_grado,descripcion_lesion From eme_dau_atencion_grado_lesion where registroactivo=1 order by cod_grado";
+                echo '<option value="0">Selec. grado</option>';
+                $result2 = mysql_query($sql2);
+                while ($row2=mysql_fetch_array($result2)){	
+                  if ($codGradoLesion == $row2[0]){
+                  	echo '<option value="'.$row2[0].'" selected="selected">'.$row2[1]. '</option>';
+                  }else{
+                    echo '<option value="'.$row2[0].'">'.$row2[1]. '</option>';
+                  }
+                }
+						mysql_free_result($result2);
+	        ?>
+	      </select>
+			</div>
+			<div class="form-group col-sm-3">
+				<label for="juzgado" class="control-label col-sm-12">Juzgado:</label>
+				<input class="form-control" type="text" id="juzgado" <?php if($codInst != 10){echo 'disabled'; } ?> />
+			</div>
+
+			<div class="form-group col-sm-3">
+				<label for="condicion_transito" class="control-label col-sm-12">Condicion en el Transito:</label>
+				<select name="condicion_transito" id="condicion_transito" class="form-control" <?php if($codInst != 10){echo 'disabled'; } ?>>
+					<option value="7">Peatón</option>
+					<option value="0">Conductor</option>
+					<option value="5">Otro</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-3">
+				<label for="placa_policia" class="control-label col-sm-12">N° Placa:</label>
+				<input class="form-control" type="text" id="placa_policia" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
+				<div class="help-block with-errors"></div>
+			</div>
+		</div>
+		<div class="form-inline row">
+			<div class="form-group col-sm-3" style="padding-left: 50px !important">
+				<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
+
+				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
+
+				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
+			</div>
+			<div class="form-group col-sm-3">
+				<label for="observacionOH" class="control-label col-sm-12">Observaciones Alcoholemia:</label>
+				<input class="form-control" type="text" id="observacionOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
 		</div>
 		<div class="form-group col-sm-12">
-			<button class="btn btn-default" id="add_sv" type="button" style="width: 100%">Guardar dev</button>
+			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
 		</div>
+		<div id="resultado" class="resutlado"/>
 	</form>
 	
 	
-	
-<?php
-$sql = 'SELECT 
-penetracion, 
-anticoncepcion, 
-profilaxis_vih, 
-profilaxis_its, 
-victimario, 
-embarazo
-FROM 
-eme_dau_atencion_as
-WHERE
-fk_atencion ='.$codAtencion.' LIMIT 1';
 
-$result = mysql_query($sql);
 
-$si_hay_as = mysql_num_rows($result);
 
-if($si_hay_as > 0){
-	while ($row = mysql_fetch_array($result)){
-		$cod_as_tpopen = $row[0];
-		$cod_as_aco = $row[1];
-		$cod_as_vih = $row[2];
-		$cod_as_its = $row[3];
-		$cod_as_vic = $row[4];
-		$cod_as_emb = $row[5];
-	}
-}
-
-?>
-	<strong>Agresión Sexual:</strong>
-	<div class="row" id="agresion_sexual">
-		<div class="col-sm-6">
-			<label for="if_as">Sospecha Violencia Sexual</label>
-			<select id="if_as" name="if_as" onchange="muestra_as();" class="form-control">
-				<option value="0" <?php if($si_hay_as == 0){ echo 'selected="selected"'; } ?>>No</option>
-				<option value="1" <?php if($si_hay_as > 0){ echo 'selected="selected"'; } ?>>Si</option>
-			</select>
-		</div>
-	</div>
-	<div id="agresion_sexual_detalle" <?php if($si_hay_as == 0){ echo 'style="display: none"'; } ?>>
-	<div class="row">
-		<div class="col-sm-3">
-			<label for="if_pen">Penetración</label>
-			<select id="if_pen" name="if_pen" class="form-control">
-				<?php
-						$sql3 = "SELECT id,opcion FROM eme_dau_atencion_as_op_tpopen WHERE registroactivo=1 order by id";
-                                        echo '<option></option>';
-                                        $result3 = mysql_query($sql3);
-                                        while ($row3 = mysql_fetch_array($result3)){
-                                            if ($cod_as_tpopen == $row3[0]){
-                                                echo '<option value="'.$row3[0].'" selected="selected">'.$row3[1]. '</option>';
-                                            }else{
-                                                echo '<option value="'.$row3[0].'">'.$row3[1]. '</option>';
-												}
-                                        }
-										mysql_free_result($result3);
-                                    ?>
-			</select>
-		</div>
-		<div class="col-sm-3">
-			<label for="if_acoe">Anticoncepción Emergencia</label>
-			<select id="if_acoe" name="if_acoe" class="form-control">
-					<option></option>
-					<option value="0" <?php if($cod_as_aco == '0'){ echo 'selected="selected"'; } ?>>No</option>
-					<option value="1" <?php if($cod_as_aco == '1'){ echo 'selected="selected"'; } ?>>Si</option>
-				</select>
-		</div>
-		<div class="col-sm-3">
-				<label for="if_as_emb">Embarazo</label>
-				<select id="if_as_emb" name="if_as_emb" class="form-control">
-					<option></option>
-					<option value="0" <?php if($cod_as_emb == '0'){ echo 'selected="selected"'; } ?>>No</option>
-					<option value="1" <?php if($cod_as_emb == '1'){ echo 'selected="selected"'; } ?>>Si</option>
-				</select>
-		</div>
-		<div class="col-sm-3">
-				<label for="if_prof_vih">Profilaxis VIH</label>
-				<select id="if_prof_vih" name="if_prof_vih" class="form-control">
-					<option></option>
-					<option value="0" <?php if($cod_as_vih == '0'){ echo 'selected="selected"'; } ?>>No</option>
-					<option value="1" <?php if($cod_as_vih == '1'){ echo 'selected="selected"'; } ?>>Si</option>
-				</select>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-3">
-				<label for="if_prof_its">Profilaxis ITS</label>
-				<select id="if_prof_its" name="if_prof_its" class="form-control">
-					<option></option>
-					<option value="0" <?php if($cod_as_its == '0'){ echo 'selected="selected"'; } ?>>No</option>
-					<option value="1" <?php if($cod_as_its == '1'){ echo 'selected="selected"'; } ?>>Si</option>
-				</select>
-		</div>
-		<div class="col-sm-3">
-				<label for="as_victimario">Victimario</label>
-				<select id="as_victimario" name="as_victimario" class="form-control">
-					<?php
-						$sql3 = "SELECT id,opcion FROM eme_dau_atencion_as_op_vic WHERE registroactivo=1 order by id";
-                                        echo '<option></option>';
-                                        $result3 = mysql_query($sql3);
-                                        while ($row3 = mysql_fetch_array($result3)){
-                                            if ($cod_as_vic == $row3[0]){
-                                                echo '<option value="'.$row3[0].'" selected="selected">'.$row3[1]. '</option>';
-                                            }else{
-                                                echo '<option value="'.$row3[0].'">'.$row3[1]. '</option>';
-												}
-                                        }
-										mysql_free_result($result3);
-                                    ?>
-				</select>
-		</div>
-		<div class="col-sm-6">
-			<label for="Guardar">&nbsp;</label>
-			<input class="btn btn-default" style="width: 100%" type="button" value="Guardar"  onclick="guarda_as();" />
-		</div>
-
-	</div>
-	</div>
 </div>
 </body>
 <script> 

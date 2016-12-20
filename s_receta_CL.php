@@ -14,9 +14,11 @@
 </head>
 	<body>
 		<div class="container">
+		<div class="row">
+		<?php include("s_receta_productos_vp.php"); ?>
 			<div class="row">
 				<div class="col-sm-12">
-					<?php include("s_receta_productos_vp.php"); ?>
+					
 					<form id="form1" name="form1" method="post" action="">
 					<label for="obs"></label>
 					<textarea class="form-control" name="obs" cols="90" rows="10" id="obs"></textarea>
