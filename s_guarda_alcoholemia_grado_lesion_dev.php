@@ -17,14 +17,21 @@ $drogas_oh =  $_POST['drogas_oh'] == "false" ? 0 : 1;
 $rechaza_oh =  $_POST['rechaza_oh'] == "false" ? 0 : 1;
 
 $fechahora = strftime( "%Y-%m-%d %H:%M:%S", time() );
-
 if($codEstadoEtilico != 0){
+	$consulta="select * from eme_dau_atencion_alcoholemia where fk_atencion=".$cod_atencion;
+	$result_consulta=mysql_query($consulta) or die (mysql_error());
+	if (mysql_num_rows($result_consulta)>0)
+	{
+	mysql_close($con);
+	echo "exits";
+	return;
+	}
 		
 	$sql0 = "INSERT INTO `eme_dau_atencion_alcoholemia`
 						(`fk_atencion`, `cond_transito`, `tec`, `drogas`, `rechaza`, `placa_policia`, `parte`, `comiseria`, `juzgado`, `observaciones`, `fk_usr`) 
 					VALUES 
 						('$cod_atencion', 
-						'$codEstadoEtilico', 
+						'$condicion_transito', 
 						'$tec_oh', 
 						'$drogas_oh', 
 						'$rechaza_oh', 
@@ -38,11 +45,10 @@ if($codEstadoEtilico != 0){
 	file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
 
 	$resultado = mysql_query($sql0) or die(mysql_error());
-	if ($resultado) {
-		echo "Alcoholemia ingresada exitosamente.";
-	}
-	else {
-		echo "error en la ejecución de la consulta.";
+	if (!$resultado) {
+		mysql_close($con);
+		echo "Error";
+		return;
 	}
 }
 
@@ -71,14 +77,12 @@ if($codGradoLesion != 0 || $codEstadoEtilico != 0){
 	file_put_contents('prueba_alcoholemia.txt', $sql1."\n", FILE_APPEND);
 	//echo "sql1: ".$sql1." ";
 
-	if ($resultado) {
-		echo " Archivo Alcoholemia.txt ingresada exitosamente.";
-	}
-	else {
-		echo " Error en la ejecución de la consulta.";
+	if (!$resultado) {
+		echo "ng";
+		mysql_close($con);
+		return;
 	}
 }
-if (!mysql_close($con)){ 
-	echo " Error en la desconexión.";
-}
+mysql_close($con);
+echo "Ok";
 ?>

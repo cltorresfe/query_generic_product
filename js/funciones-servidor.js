@@ -2040,20 +2040,24 @@ function guarda_alcoholemia_grado_lesion(lugar) {
 			alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
 		} 			
 	});
+		
+		
+		
+	
 			
 }
 
 
+
+
 function guarda_alcoholemia_grado_lesion_dev(lugar) {
-	var msg = "";
-	var div_result = "<div class='alert alert-danger alert-dismissible' role='alert'>"+
-		  "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"+
-		  "<strong>Advertencia:!</strong> ";
-  if (lugar=='fuera'){
+   	
+   	if (lugar=='fuera'){
 		var codEstadoEtilico = window.frames[3].document.getElementById('estadoEtilico').value;
 		var nroFrascoAlco = window.frames[3].document.getElementById('nroFracoAlcoholemia').value;
 		var codGradoLesion  = window.frames[3].document.getElementById('gradoLesion').value;
 		var codAtencion = window.frames[3].document.getElementById('cod_aten').value;
+		
 		var parte = window.frames[3].document.getElementById('parteOH').value;
 		var unidad_policia = window.frames[3].document.getElementById('unidad_policia').value;
 		var juzgado = window.frames[3].document.getElementById('juzgado').value;
@@ -2063,13 +2067,13 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		var tec_oh = window.frames[3].document.getElementById('tec_oh').value;
 		var drogas_oh = window.frames[3].document.getElementById('drogas_oh').value;
 		var rechaza_oh = window.frames[3].document.getElementById('rechaza_oh').value;
-  }
-  else{
-   	var codEstadoEtilico = document.getElementById('estadoEtilico').value;
-   	var nroFrascoAlco = document.getElementById('nroFracoAlcoholemia').value;
-   	var codGradoLesion  = document.getElementById('gradoLesion').value;
-   	var codAtencion = document.getElementById('cod_aten').value;
-   	var codUser = document.getElementById('cod_usr').value;
+	
+   	}else{
+	   	var codEstadoEtilico = document.getElementById('estadoEtilico').value;
+	   	var nroFrascoAlco = document.getElementById('nroFracoAlcoholemia').value;
+	   	var codGradoLesion  = document.getElementById('gradoLesion').value;
+	   	var codAtencion = document.getElementById('cod_aten').value;
+		
 		var parte = document.getElementById('parteOH').value;
 		var unidad_policia = document.getElementById('unidad_policia').value;
 		var juzgado = document.getElementById('juzgado').value;
@@ -2079,21 +2083,25 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		var tec_oh = document.getElementById('tec_oh').checked;
 		var drogas_oh = document.getElementById('drogas_oh').checked;
 		var rechaza_oh = document.getElementById('rechaza_oh').checked;
-		if( unidad_policia == '' || placa_policia == ''){
-			msg = "No se pudo realizar la operación. Por favor, revise los datos que sean válidos.</div>"
-
-			$("#resultado").html(div_result+msg);
-			return false;
-		}
- 	}
- 	$("#sv_form").validator('validate');
-	var iurl = 's_guarda_alcoholemia_grado_lesion_dev.php';
+		
+   	}
+		
+		
+	
+		
+		
+		
+		//alert("ee: "+codEstadoEtilico+" nf: "+nroFrascoAlco+" gl: "+codGradoLesion+" a: "+codAtencion);
+		
+	var iurl = 's_guarda_alcoholemia_grado_lesion_dev.php?'+Math.random();
+	
 	var parametros = {
+		
 		"ee": codEstadoEtilico,
 		"nf": nroFrascoAlco,
 		"gl": codGradoLesion,
 		"a":  codAtencion,
-		"u": codUser,
+		
 		"parte": parte,
 		"unidad_policia": unidad_policia,
 		"juzgado": juzgado,
@@ -2102,34 +2110,43 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		"observacionOH": observacionOH,
 		"tec_oh": tec_oh,
 		"drogas_oh": drogas_oh,
-		"rechaza_oh": rechaza_oh						
+		"rechaza_oh": rechaza_oh
+								
 	};
 	console.log(parametros);
 	$.ajax({
 		data:  parametros,
-		url:   's_guarda_alcoholemia_grado_lesion_dev.php',
+		url:   iurl,
 		type:  'post',
-		beforeSend: function () {
-		  $("#resultado").html("Procesando, espere por favor...");
-		},
 		success:  function (response) {
-			if(response.trim() == 'ng' || response.trim() == 'error'){
-				msg = "Ocurrió un Error en la Consulta de Datos</div>";
-				$("#resultado").html(div_result+msg);
-			}
-			if(response.trim() == 'exits'){
-				msg = "La alcoholemia ya está ingresada</div>";
-				$("#resultado").html(div_result+msg);
-			}
-			if(response.trim() == 'Ok'){
-				$("#resultado").html(response);
-			}
+					
+					//alert(response);
+					//document.getElementById('nroFracoAlcoholemia').value=response;
+					
+					if(response.trim() == 'g'){
+					
+						//alert('Datos guardados correctamente');
+						//document.getElementById('indicacion').value="";
+						
+					}else{
+						
+						alert('Los datos de la alcoholemia no fueron registrados, favor intente nuevamente');
+					}
 		}, 
 		error: function (){
 			alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
 		} 			
-	});	
+	});
+		
+		
+		
+	
+			
 }
+
+
+
+
 
  function obtiene_examen_observacion(origen) {
     if (origen=='fuera'){
@@ -2599,6 +2616,15 @@ function abrir_resultado_img(rut) {
 	tb_show('s', url);
 }
 
+
+	function abrir_boleta_alcoholemia(codAten) {
+	var ancho=600; var alto=720;
+	pagina='/dau/vista/atencion/formularios/alcoholemia.php';
+	variables = "a="+codAten;
+	configuracion = "KeepThis=true&TB_iframe=true&width="+ancho+"&height="+alto+"&modal=false";
+	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
+	tb_show('Boleta Alcoholemia', url);
+}
 
 
 // /dau/vista/atencion/formularios/fuo.php?a=38011
@@ -3280,7 +3306,7 @@ if (lugar=='fuera'){
 		"emb" : Embarazo
 								
 	};
-	console.log(parametros);
+	//console.log(parametros);
 	$.ajax({
 		data:  parametros,
 		url:   iurl,
