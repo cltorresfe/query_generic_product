@@ -228,9 +228,13 @@ function validacionCampoTexto(valor){
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-sm-6">
 			<label for="Guardar">&nbsp;</label>
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
+		</div>
+		<div class="col-sm-6">
+			<label for="Ver">&nbsp;</label>
+			<input class="btn btn-default" type="button" value="Ver Boleta Alcoholemia" style="width: 100%" onclick="<?php if($codInst == 10){echo 'abrir_boleta_alcoholemia('.$codAtencion.');'; }else{echo ''; } ?>"  <?php if($codInst != 10){echo 'disabled'; } ?> />
 		</div>
 	</div>
 	

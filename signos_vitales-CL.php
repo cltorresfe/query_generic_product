@@ -231,8 +231,8 @@ function validacionCampoTexto(valor){
 				<div class="help-block with-errors"></div>
 			</div>
 		</div>
-		<div class="form-inline row">
-			<div class="form-group col-sm-3">
+		<div class="row">
+			<div class="form-group col-sm-3"  style="padding-left: 40px !important">
 				<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
 
 				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
@@ -240,22 +240,23 @@ function validacionCampoTexto(valor){
 				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
 			</div>
 			<div class="form-group col-sm-9">
-				<label for="observacionOH" class="control-label col-sm-12">Observaciones Alcoholemia:</label>
+				<label for="observacionOH" class="control-label">Observaciones Alcoholemia:</label>
 				<input class="form-control" type="text" id="observacionOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
 			</div>
 		</div>
 		<div class="form-group col-sm-12">
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
-			<script> 
-				fn_carga_tabla_signos_vitales();
-			</script>
+		</div>
+		<div class="form-group col-sm-12">
+			<div id="resultado" class="row" align="center" />
 		</div>
 	</form>
-	<div id="resultado" class="row" align="center" />
 
 </div>
 </body>
-
+<script> 
+	fn_carga_tabla_signos_vitales();
+</script>
 </html>
 <?php
 mysql_close($con);
