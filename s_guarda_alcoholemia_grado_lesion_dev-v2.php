@@ -22,45 +22,34 @@ if($codEstadoEtilico != 0){
 	$result_consulta=mysql_query($consulta) or die (mysql_error());
 	if (mysql_num_rows($result_consulta)>0)
 	{
-		$sql0 = "UPDATE eme_dau_atencion_alcoholemia SET
-							fk_atencion=$cod_atencion, cond_transito=$condicion_transito, tec=$tec_oh, drogas=$drogas_oh, rechaza=$rechaza_oh, placa_policia='$placa_policia', parte='$parte', comiseria='$unidad_policia', juzgado='$juzgado', observaciones='$observacionOH', fk_usr=$cod_user";
-
-
-		file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
-
-		$resultado = mysql_query($sql0) or die(mysql_error());
-		if (!$resultado) {
-			mysql_close($con);
-			echo "Error";
-			return;
-		}
-		echo "exits";
+	mysql_close($con);
+	echo "exits";
+	return;
 	}
-	else {
-		$sql0 = "INSERT INTO `eme_dau_atencion_alcoholemia`
-							(`fk_atencion`, `cond_transito`, `tec`, `drogas`, `rechaza`, `placa_policia`, `parte`, `comiseria`, `juzgado`, `observaciones`, `fk_usr`) 
-						VALUES 
-							('$cod_atencion', 
-							'$condicion_transito', 
-							'$tec_oh', 
-							'$drogas_oh', 
-							'$rechaza_oh', 
-							'$placa_policia', 
-							'$parte', 
-							'$unidad_policia',
-							'$juzgado', 
-							'$observacionOH',
-							'$cod_user')";
+		
+	$sql0 = "INSERT INTO `eme_dau_atencion_alcoholemia`
+						(`fk_atencion`, `cond_transito`, `tec`, `drogas`, `rechaza`, `placa_policia`, `parte`, `comiseria`, `juzgado`, `observaciones`, `fk_usr`) 
+					VALUES 
+						('$cod_atencion', 
+						'$condicion_transito', 
+						'$tec_oh', 
+						'$drogas_oh', 
+						'$rechaza_oh', 
+						'$placa_policia', 
+						'$parte', 
+						'$unidad_policia',
+						'$juzgado', 
+						'$observacionOH',
+						'$cod_user')";
 
-		file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
+	file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
 
-		$resultado = mysql_query($sql0) or die(mysql_error());
-		if (!$resultado) {
-			mysql_close($con);
-			echo "Error";
-			return;
-		}
-	}	
+	$resultado = mysql_query($sql0) or die(mysql_error());
+	if (!$resultado) {
+		mysql_close($con);
+		echo "Error";
+		return;
+	}
 }
 
 if($codGradoLesion != 0 || $codEstadoEtilico != 0){

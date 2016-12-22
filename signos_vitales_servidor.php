@@ -20,20 +20,23 @@ body{
 	font-family: "Lucida Sans Unicode", "Lucida Grande","Trebuchet MS", Helvetica, sans-serif !important;
 }
 </style>
-
+<link href="../../recursos/estilo/css/bootstrap.min.css" rel="stylesheet">
 <script src="../../recursos/js/jQuery-1.11.3/jquery-1.11.3.min.js"></script>
-<script src="../../recursos/jquery/calendario/jquery-ui-1.9.2.js"></script>
 <script src="../../recursos/estilo/js/bootstrap.min.js"></script>
-<script src="../../recursos/estilo/js/bootstrap-validator.min.js"></script>
-<script src="../../recursos/jquery/thickbox/thickbox.js"></script>
 
 <link rel="stylesheet" href="../../recursos/jquery/calendario/jquery-ui.css" />
-<link rel="stylesheet" href="../../recursos/estilo/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../recursos/estilo/css/custom.css">
-<link rel="stylesheet" href="../../recursos/jquery/calendario/jquery.ui.datepicker.css" />
-<link rel="stylesheet" href="../../recursos/jquery/thickbox/thickbox.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../recursos/jquery/calendario/jquery.ui.datepicker.css" />  
+<script src="../../recursos/jquery/calendario/jquery-1.8.3.min.js"></script>
+<script src="../../recursos/jquery/calendario/jquery-ui-1.9.2.js"></script>
 
+<!-- ventana tickbox -->
+<script type="text/javascript" src="../../recursos/jquery/thickbox/thickbox.js"></script>
+<link rel="stylesheet" href="../../recursos/jquery/thickbox/thickbox.css" type="text/css" media="screen" />
+<!-- ventana tickbox -->  
+
+<!-- <link href="../../recursos/estilo/self_datos.css<?php echo '?'.rand();?>" rel="stylesheet" /> -->
 <script src="funciones.js<?php echo '?'.rand();?>"></script>
+
 
 <script>
 function validacionCampoNumericoSimple(valor){
@@ -140,103 +143,104 @@ function validacionCampoTexto(valor){
 						}
 						mysql_free_result($result0);
 					?>
-
+					
+					
 	<strong>Accidente y Alcoholemia:</strong>
-	<form id="sv_form" data-toggle="validator" role="form">
-		<div class="form-inline row">
-			<div class="form-group col-sm-3">
-				<label for="estadoEtilico" class="control-label">Estado etílico:</label>
-				<select name="estadoEtilico" id="estadoEtilico" class="form-control" style="width: 100%"> 
-					<?php 
-						$sql1 = "Select cod_e_etilico,descripcion_e_etilico From eme_dau_estado_etilico where registroactivo=1 order by cod_e_etilico";
-						echo '<option value="0">Selec. estado</option>';
-						$result1 = mysql_query($sql1);
-						while ($row1=mysql_fetch_array($result1)){	
+	<div class="row" id="div_accidentes_y_alcoholemia">
+		<div class="col-sm-3">
+			<label for="estadoEtilico">Estado etílico:</label>
+			<select name="estadoEtilico" id="estadoEtilico" class="form-control"> 
+		<?php 
+			$sql1 = "Select cod_e_etilico,descripcion_e_etilico From eme_dau_estado_etilico where registroactivo=1 order by cod_e_etilico";
+			echo '<option value="0">Selec. estado</option>';
+			$result1 = mysql_query($sql1);
+			while ($row1=mysql_fetch_array($result1)){	
             	if ($codEstadoEtilico == $row1[0]){
                 	echo '<option value="'.$row1[0].'" selected="selected">'.$row1[1].'</option>';
                 }else{
 	                echo '<option value="'.$row1[0].'">'.$row1[1].'</option>';
 	            }
-				    }
-						mysql_free_result($result1);
-		      ?>
-		    </select>
-			</div>
-			<div class="form-group col-sm-3">
-				<label for="nroFracoAlcoholemia" class="control-label">Nº frasco alcoholemia</label>
-				<input class="form-control" type="text" id="nroFracoAlcoholemia" style="width: 100%">
-			</div>
-			<div class="form-group col-sm-3">
-				<label for="parteOH" class="control-label">N° Parte:</label>
-				<input class="form-control col-sm-12" type="text" id="parteOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
-			</div>
-			<div class="form-group col-sm-3">
-				<label for="unidad_policia" class="control-label">Unidad Policial:</label>
-				<input class="form-control col-sm-12" type="text" id="unidad_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
-				<div class="help-block with-errors col-sm-12"></div>
-			</div>
+	        }
+			mysql_free_result($result1);
+        ?>
+	        </select>
 		</div>
-		<div class="form-inline row">
-			<div class="form-group col-sm-3">
-				<label for="gradoLesion" class="control-label">Pronóstico médico-legal:</label>
-				<select name="gradoLesion" id="gradoLesion" class="form-control" style="width: 100%"> 
-					<?php 
-						$sql2 = "Select cod_grado,descripcion_lesion From eme_dau_atencion_grado_lesion where registroactivo=1 order by cod_grado";
-                echo '<option value="0">Selec. grado</option>';
-                $result2 = mysql_query($sql2);
-                while ($row2=mysql_fetch_array($result2)){	
-                  if ($codGradoLesion == $row2[0]){
-                  	echo '<option value="'.$row2[0].'" selected="selected">'.$row2[1]. '</option>';
-                  }else{
-                    echo '<option value="'.$row2[0].'">'.$row2[1]. '</option>';
-                  }
-                }
-						mysql_free_result($result2);
-	        ?>
-	      </select>
-			</div>
-			<div class="form-group col-sm-3">
-				<label for="juzgado" class="control-label">Juzgado:</label>
-				<input class="form-control" type="text" id="juzgado" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
-			</div>
-
-			<div class="form-group col-sm-3">
-				<label for="condicion_transito" class="control-label">Condición Tránsito:</label>
-				<select name="condicion_transito" id="condicion_transito" class="form-control" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?>>
+		<div class="col-sm-3">
+			<label for="">Nº frasco alcoholemia</label>
+			<input class="form-control" type="text" id="nroFracoAlcoholemia" value="<?php echo $numeroFrascoAlcoholemia;?>" maxlength="6"/>
+		</div>
+		<div class="col-sm-3">
+			<label for="parteOH">N° Parte:</label>
+			<input class="form-control" type="text" id="parteOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
+		</div>
+		<div class="col-sm-3">
+			<label for="unidad_policia">Unidad Policial:</label>
+			<input class="form-control" type="text" id="unidad_policia" <?php if($codInst != 10){echo 'disabled'; } ?> />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-3">
+			<label for="gradoLesion">Pronóstico médico-legal:</label>
+			<select name="gradoLesion" id="gradoLesion" class="form-control"> 
+				<?php 
+					$sql2 = "Select cod_grado,descripcion_lesion From eme_dau_atencion_grado_lesion where registroactivo=1 order by cod_grado";
+                    echo '<option value="0">Selec. grado</option>';
+                    $result2 = mysql_query($sql2);
+                    while ($row2=mysql_fetch_array($result2)){	
+                    if ($codGradoLesion == $row2[0]){
+                    	echo '<option value="'.$row2[0].'" selected="selected">'.$row2[1]. '</option>';
+                    }else{
+	                    echo '<option value="'.$row2[0].'">'.$row2[1]. '</option>';
+                    }
+                    }
+					mysql_free_result($result2);
+                ?>
+            </select>
+		</div>
+		<div class="col-sm-3">
+			<label for="juzgado">Juzgado:</label>
+			<input class="form-control" type="text" id="juzgado" <?php if($codInst != 10){echo 'disabled'; } ?> />
+		</div>
+		<div class="col-sm-3">
+			<label for="condicion_transito">Condicion en el Transito:</label>
+				<select name="condicion_transito" id="condicion_transito" class="form-control" <?php if($codInst != 10){echo 'disabled'; } ?>>
 					<option value="7">Peatón</option>
 					<option value="0">Conductor</option>
 					<option value="5">Otro</option>
 				</select>
-			</div>
-			<div class="form-group col-sm-3">
-				<label for="placa_policia" class="control-label">N° Placa:</label>
-				<input class="form-control" type="text" id="placa_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
-				<div class="help-block with-errors"></div>
-			</div>
 		</div>
-		<div class="row">
-			<div class="form-group col-sm-3"  style="padding-left: 40px !important">
-				<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
-
-				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
-
-				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
-			</div>
-			<div class="form-group col-sm-9">
-				<label for="observacionOH" class="control-label">Observaciones Alcoholemia:</label>
-				<input class="form-control" type="text" id="observacionOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
-			</div>
+		<div class="col-sm-3">
+			<label for="placa_policia">N° Placa:</label>
+			<input class="form-control" type="text" id="placa_policia" <?php if($codInst != 10){echo 'disabled'; } ?> />
 		</div>
-		<div class="form-group col-sm-6">
+	</div>
+	<div class="row">
+		<div class="col-sm-3" style="padding-left: 50px !important">
+			<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
+
+			<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
+
+			<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
+		</div>
+		<div class="col-sm-9">
+			<label for="observacionOH">Observaciones Alcoholemia:</label>
+			<input class="form-control" type="text" id="observacionOH" <?php if($codInst != 10){echo 'disabled'; } ?> />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<label for="Guardar">&nbsp;</label>
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
 		</div>
-		<div class="orm-group col-sm-6">
+		<div class="col-sm-6">
+			<label for="Ver">&nbsp;</label>
 			<input class="btn btn-default" type="button" value="Ver Boleta Alcoholemia" style="width: 100%" onclick="<?php if($codInst == 10){echo 'abrir_boleta_alcoholemia('.$codAtencion.');'; }else{echo ''; } ?>"  <?php if($codInst != 10){echo 'disabled'; } ?> />
 		</div>
-		<div class="form-group col-sm-12">
-			<div id="resultado" class="row" align="center" />
-		</div>
-	</form>
+	</div>
+	
+	
+	
+	
 <?php
 $sql = 'SELECT 
 penetracion, 

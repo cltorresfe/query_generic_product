@@ -2040,9 +2040,12 @@ function guarda_alcoholemia_grado_lesion(lugar) {
 			alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
 		} 			
 	});
+		
+		
+		
+	
 			
 }
-
 
 function guarda_alcoholemia_grado_lesion_dev(lugar) {
 	var msg = "";
@@ -2079,14 +2082,8 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		var tec_oh = document.getElementById('tec_oh').checked;
 		var drogas_oh = document.getElementById('drogas_oh').checked;
 		var rechaza_oh = document.getElementById('rechaza_oh').checked;
-		if( unidad_policia == '' || placa_policia == ''){
-			msg = "No se pudo realizar la operación. Por favor, revise los datos que sean válidos.</div>"
-
-			$("#resultado").html(div_result+msg);
-			return false;
-		}
  	}
- 	$("#sv_form").validator('validate');
+
 	var iurl = 's_guarda_alcoholemia_grado_lesion_dev.php';
 	var parametros = {
 		"ee": codEstadoEtilico,
@@ -2104,7 +2101,6 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		"drogas_oh": drogas_oh,
 		"rechaza_oh": rechaza_oh						
 	};
-	console.log(parametros);
 	$.ajax({
 		data:  parametros,
 		url:   's_guarda_alcoholemia_grado_lesion_dev.php',
@@ -2113,6 +2109,7 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		  $("#resultado").html("Procesando, espere por favor...");
 		},
 		success:  function (response) {
+			$("#resultado").html('holaa'+response);
 			if(response.trim() == 'ng' || response.trim() == 'error'){
 				msg = "Ocurrió un Error en la Consulta de Datos</div>";
 				$("#resultado").html(div_result+msg);
@@ -2130,6 +2127,8 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		} 			
 	});	
 }
+
+
 
  function obtiene_examen_observacion(origen) {
     if (origen=='fuera'){
@@ -2599,6 +2598,15 @@ function abrir_resultado_img(rut) {
 	tb_show('s', url);
 }
 
+
+	function abrir_boleta_alcoholemia(codAten) {
+	var ancho=600; var alto=720;
+	pagina='/dau/vista/atencion/formularios/alcoholemia.php';
+	variables = "a="+codAten;
+	configuracion = "KeepThis=true&TB_iframe=true&width="+ancho+"&height="+alto+"&modal=false";
+	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
+	tb_show('Boleta Alcoholemia', url);
+}
 
 
 // /dau/vista/atencion/formularios/fuo.php?a=38011
@@ -3280,7 +3288,7 @@ if (lugar=='fuera'){
 		"emb" : Embarazo
 								
 	};
-	console.log(parametros);
+	//console.log(parametros);
 	$.ajax({
 		data:  parametros,
 		url:   iurl,
