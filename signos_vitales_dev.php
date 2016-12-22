@@ -259,9 +259,9 @@ function validacionCampoTexto(valor){
 		</div>
 		<div class="form-group col-sm-6">
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
-		</div>
-		<div class="orm-group col-sm-6">
-			<input class="btn btn-default" type="button" value="Ver Boleta Alcoholemia" style="width: 100%" onclick="<?php if($codInst == 10){echo 'abrir_boleta_alcoholemia('.$codAtencion.');'; }else{echo ''; } ?>"  <?php if($codInst != 10){echo 'disabled'; } ?> />
+			</div>
+			<div class="form-group col-sm-6">
+		   <input class="btn btn-default" type="button" value="Ver Boleta Alcoholemia" style="width: 100%" data-href="" data-toggle="modal" data-send="false"  data-target="#imprime-alcoholemia"/>
 		</div>
 		<div class="form-group col-sm-12">
 			<div id="resultado" class="row" align="center" />
@@ -386,6 +386,28 @@ if($si_hay_as > 0){
 	</div>
 	</div>
 </div>
+		<div class="modal fade" id="imprime-alcoholemia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		       <div class="modal-dialog">
+		           <div class="modal-content">
+		           
+		               <div class="modal-header">
+		                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                   <h4 class="modal-title" id="myModalLabel">Imprime Alcoholemia</h4>
+		               </div>
+		           
+		               <div class="modal-body">
+		                   <p>You are about to delete one track, this procedure is irreversible.</p>
+		                   <p>¿Estás Seguro?</p>
+		                     <p class="debug-url"></p>
+		               </div>
+		               
+		               <div class="modal-footer">
+		                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		                   <a class="btn btn-danger btn-ok" onclick="buscaTalentos()" data-dismiss="modal">Imprime</a>
+		               </div>
+		           </div>
+		       </div>
+		   </div>
 </body>
 <script> 
 	fn_carga_tabla_signos_vitales();

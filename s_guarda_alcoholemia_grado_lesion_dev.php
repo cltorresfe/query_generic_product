@@ -1,7 +1,28 @@
 <?php
 include_once("conexion/conexion.php");
 
+$imprime = $_POST['imprime'];
 $cod_atencion = $_POST['a'];
+echo "Imprime: $imprime";
+echo "Atencion: $cod_atencion";
+
+if($imprime == 'imprime'){
+	$consulta="SELECT * FROM eme_dau_atencion_alcoholemia WHERE fk_atencion= $cod_atencion";
+	$result_consulta=mysql_query($consulta) or die (mysql_error());
+	if (mysql_num_rows($result_consulta)>0)
+	{ 
+		$sql0 = "UPDATE eme_dau_atencion_alcoholemia SET imprime = 1 where fk_atencion = $cod_atencion";
+		$resultado = mysql_query($sql0) or die(mysql_error());
+		if (!$resultado) {
+			mysql_close($con);
+			echo "error";
+			return;
+		}
+		echo "Ok";
+		return;
+	}
+}
+
 $cod_user = $_POST['u'];
 $codEstadoEtilico = $_POST['ee'];
 $nroFrascoAlco = $_POST['nf'];
@@ -16,6 +37,7 @@ $tec_oh =  $_POST['tec_oh'] == "false" ? 0 : 1;
 $drogas_oh =  $_POST['drogas_oh'] == "false" ? 0 : 1;
 $rechaza_oh =  $_POST['rechaza_oh'] == "false" ? 0 : 1;
 
+
 $fechahora = strftime( "%Y-%m-%d %H:%M:%S", time() );
 if($codEstadoEtilico != 0){
 	$consulta="select * from eme_dau_atencion_alcoholemia where fk_atencion=".$cod_atencion;
@@ -23,7 +45,7 @@ if($codEstadoEtilico != 0){
 	if (mysql_num_rows($result_consulta)>0)
 	{
 		$sql0 = "UPDATE eme_dau_atencion_alcoholemia SET
-							fk_atencion=$cod_atencion, cond_transito=$condicion_transito, tec=$tec_oh, drogas=$drogas_oh, rechaza=$rechaza_oh, placa_policia='$placa_policia', parte='$parte', comiseria='$unidad_policia', juzgado='$juzgado', observaciones='$observacionOH', fk_usr=$cod_user";
+							cond_transito=$condicion_transito, tec=$tec_oh, drogas=$drogas_oh, rechaza=$rechaza_oh, placa_policia='$placa_policia', parte='$parte', comiseria='$unidad_policia', juzgado='$juzgado', observaciones='$observacionOH', fk_usr=$cod_user where fk_atencion = $cod_atencion";
 
 
 		file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);

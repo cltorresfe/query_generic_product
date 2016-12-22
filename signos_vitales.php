@@ -123,26 +123,51 @@ function validacionCampoTexto(valor){
 		</div>
 	</div>
                     
-                    <?php 
-						$codEstadoEtilico = 0; 
-						$codGradoLesion = 0;
-						$numeroFrascoAlcoholemia = "";
-					
-						$sql0 = "Select alcoholemia,fk_estado_etilico,informe_lesiones From eme_dau_atencion Where cod_aten = ".$codAtencion;
-						
-						$result0 = mysql_query($sql0);
-						while ($row0=mysql_fetch_array($result0)){	
-						
-							$numeroFrascoAlcoholemia = $row0[0];
-							$codEstadoEtilico = $row0[1];
-							$codGradoLesion   = $row0[2];
-						
-						}
-						mysql_free_result($result0);
-					?>
+  <?php 
+		$codEstadoEtilico = 0; 
+		$codGradoLesion = 0;
+		$numeroFrascoAlcoholemia = "";
+		$sql0 = "Select alcoholemia,fk_estado_etilico,informe_lesiones From eme_dau_atencion Where cod_aten = ".$codAtencion;
+		
+		$result0 = mysql_query($sql0);
+		while ($row0=mysql_fetch_array($result0)){	
+		
+			$numeroFrascoAlcoholemia = $row0[0];
+			$codEstadoEtilico = $row0[1];
+			$codGradoLesion   = $row0[2];
+		
+		}
+		mysql_free_result($result0);
 
+		$condicion_transito = 0;
+		$tec_oh = 0;
+		$drogas_oh = 0;
+		$rechaza_oh = 0;
+		$placa_policia = "";
+		$parteOH = "";
+		$unidad_policia = "";
+		$juzgado = "";
+		$observacionOH = "";
+		mysql_free_result($result0);
+
+		$sql1 = "SELECT cond_transito, tec, drogas, rechaza, placa_policia, parte, comiseria, juzgado, observaciones FROM eme_dau_atencion_alcoholemia WHERE fk_atencion = ".$codAtencion;
+		$result1 = mysql_query($sql1);
+		while ($row1=mysql_fetch_array($result1)){
+			$condicion_transito = $row1[0];
+			$tec_oh = $row1[1];
+			$drogas_oh = $row1[2];
+			$rechaza_oh = $row1[3];
+			$placa_policia = $row1[4];
+			$parteOH = $row1[5];
+			$unidad_policia = $row1[6];
+			$juzgado = $row1[7];
+			$observacionOH = $row1[8];
+		}
+		mysql_free_result($result1);
+	?>
 	<strong>Accidente y Alcoholemia:</strong>
 	<form id="sv_form" data-toggle="validator" role="form">
+
 		<div class="form-inline row">
 			<div class="form-group col-sm-3">
 				<label for="estadoEtilico" class="control-label">Estado etílico:</label>
@@ -168,12 +193,11 @@ function validacionCampoTexto(valor){
 			</div>
 			<div class="form-group col-sm-3">
 				<label for="parteOH" class="control-label">N° Parte:</label>
-				<input class="form-control col-sm-12" type="text" id="parteOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
+				<input class="form-control col-sm-12" type="text" id="parteOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> value="<?php echo $parteOH;?>" />
 			</div>
 			<div class="form-group col-sm-3">
 				<label for="unidad_policia" class="control-label">Unidad Policial:</label>
-				<input class="form-control col-sm-12" type="text" id="unidad_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
-				<div class="help-block with-errors col-sm-12"></div>
+				<input class="form-control col-sm-12" type="text" id="unidad_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> value="<?php echo $unidad_policia;?>">
 			</div>
 		</div>
 		<div class="form-inline row">
@@ -197,34 +221,41 @@ function validacionCampoTexto(valor){
 			</div>
 			<div class="form-group col-sm-3">
 				<label for="juzgado" class="control-label">Juzgado:</label>
-				<input class="form-control" type="text" id="juzgado" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
+				<input class="form-control" type="text" id="juzgado" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> value="<?php echo $juzgado;?>" />
 			</div>
-
 			<div class="form-group col-sm-3">
 				<label for="condicion_transito" class="control-label">Condición Tránsito:</label>
 				<select name="condicion_transito" id="condicion_transito" class="form-control" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?>>
-					<option value="7">Peatón</option>
-					<option value="0">Conductor</option>
-					<option value="5">Otro</option>
+				<?php 
+					echo ($condicion_transito == 7 ? "<option value='7' selected='selected'>Peatón</option>" : "<option value='7'>Peatón</option>");
+					echo ($condicion_transito == 0 ? "<option value='0' selected='selected'>Conductor</option>" : "<option value='0'>Conductor</option>");
+					echo ($condicion_transito == 5 ? "<option value='5' selected='selected'>Otro</option>" : "<option value='5'>Otro</option>");
+				?>
 				</select>
 			</div>
 			<div class="form-group col-sm-3">
 				<label for="placa_policia" class="control-label">N° Placa:</label>
-				<input class="form-control" type="text" id="placa_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> data-error="Debe ingresar datos" required>
-				<div class="help-block with-errors"></div>
+				<input class="form-control" type="text" id="placa_policia" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> value="<?php echo $placa_policia;?>">
 			</div>
 		</div>
 		<div class="row">
 			<div class="form-group col-sm-3"  style="padding-left: 40px !important">
-				<label class="checkbox"><input type="checkbox" value="1" name="tec_oh" id="tec_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de TEC</label>
+				<label class="checkbox">
+				<input type="checkbox" value="1" name="tec_oh" id="tec_oh" 
+				<?php if($codInst != 10){echo 'disabled';}
+				 			if($tec_oh==1){echo 'checked';}?>>Presencia de TEC</label>
 
-				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Presencia de Otras Drogas</label>
+				<label class="checkbox"><input type="checkbox" value="1" name="drogas_oh" id="drogas_oh" 
+				<?php if($codInst != 10){echo 'disabled'; }
+				      if($drogas_oh==1){echo 'checked';}?>>Presencia de Otras Drogas</label>
 
-				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" <?php if($codInst != 10){echo 'disabled'; } ?>>Rechaza toma alcoholemia</label>
+				<label class="checkbox"><input type="checkbox" value="1" name="rechaza_oh" id="rechaza_oh" 
+				<?php if($codInst != 10){echo 'disabled'; }
+							if($rechaza_oh==1){echo 'checked';} ?>>Rechaza toma alcoholemia</label>
 			</div>
 			<div class="form-group col-sm-9">
 				<label for="observacionOH" class="control-label">Observaciones Alcoholemia:</label>
-				<input class="form-control" type="text" id="observacionOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> />
+				<input class="form-control" type="text" id="observacionOH" style="width: 100%" <?php if($codInst != 10){echo 'disabled'; } ?> value="<?php echo $observacionOH;?>" />
 			</div>
 		</div>
 		<div class="form-group col-sm-6">
