@@ -147,9 +147,9 @@ function validacionCampoTexto(valor){
 		$unidad_policia = "";
 		$juzgado = "";
 		$observacionOH = "";
-		mysql_free_result($result0);
+		$imprimeOH ="";
 
-		$sql1 = "SELECT cond_transito, tec, drogas, rechaza, placa_policia, parte, comiseria, juzgado, observaciones FROM eme_dau_atencion_alcoholemia WHERE fk_atencion = ".$codAtencion;
+		$sql1 = "SELECT cond_transito, tec, drogas, rechaza, placa_policia, parte, comiseria, juzgado, observaciones, imprime FROM eme_dau_atencion_alcoholemia WHERE fk_atencion = ".$codAtencion;
 		$result1 = mysql_query($sql1);
 		while ($row1=mysql_fetch_array($result1)){
 			$condicion_transito = $row1[0];
@@ -161,6 +161,7 @@ function validacionCampoTexto(valor){
 			$unidad_policia = $row1[6];
 			$juzgado = $row1[7];
 			$observacionOH = $row1[8];
+			$imprimeOH = $row1[9];
 		}
 		mysql_free_result($result1);
 	?>
@@ -261,7 +262,7 @@ function validacionCampoTexto(valor){
 			<input class="btn btn-default" type="button" value="Guardar" style="width: 100%" onclick="<?php if($codInst == 10){echo 'guarda_alcoholemia_grado_lesion_dev();'; }else{echo 'guarda_alcoholemia_grado_lesion();'; } ?>" />
 			</div>
 			<div class="form-group col-sm-6">
-		   <input class="btn btn-default" type="button" value="Ver Boleta Alcoholemia" style="width: 100%" data-href="" data-toggle="modal" data-send="false"  data-target="#imprime-alcoholemia"/>
+		   <input class="btn btn-default" type="button" value="Imprimir Boleta Alcoholemia" style="width: 100%" data-href="" data-toggle="modal" data-send="false"  data-target="#imprime-alcoholemia" <?php if($codInst != 10){echo 'disabled'; } ?>/>
 		</div>
 		<div class="form-group col-sm-12">
 			<div id="resultado" class="row" align="center" />
@@ -390,20 +391,20 @@ if($si_hay_as > 0){
 		       <div class="modal-dialog">
 		           <div class="modal-content">
 		           
-		               <div class="modal-header">
-		                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                   <h4 class="modal-title" id="myModalLabel">Imprime Alcoholemia</h4>
-		               </div>
-		           
-		               <div class="modal-body">
-		                   <p>You are about to delete one track, this procedure is irreversible.</p>
-		                   <p>¿Estás Seguro?</p>
-		                     <p class="debug-url"></p>
-		               </div>
+									<div class="modal-header">
+									   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									   <h4 class="modal-title" id="myModalLabel">Imprime Alcoholemia</h4>
+									</div>
+		              <div class="modal-body">
+		                   <p>¿Está seguro que quiere imprimir Alcoholemia?</p><br>
+		                   <p style="font-size: 11px; color:#ff7701"><strong>Advertencia:</strong> Este es un <strong>Documento Legal</strong> y después no podrá ser modificado.</p>
+		              </div>
 		               
 		               <div class="modal-footer">
 		                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		                   <a class="btn btn-danger btn-ok" onclick="buscaTalentos()" data-dismiss="modal">Imprime</a>
+		                   <a class="btn btn-danger btn-ok" onclick="<?php if($codInst == 10){echo "abrir_boleta_alcoholemia($codAtencion,$imprimeOH );"; }else{echo ''; } ?>" data-dismiss="modal"><?php echo ($imprimeOH == 0 ? "Imprimir" : "Ver") ?></a>
+
+
 		               </div>
 		           </div>
 		       </div>

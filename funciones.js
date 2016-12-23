@@ -2125,13 +2125,12 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 
 $(document).ready(function(){
 	$('#imprime-alcoholemia').on('show.bs.modal', function(e) {
-	   $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-	   
-	   $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+	  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	  $('.debug-url').html('Responsable: <strong>' + $("#cod_aten").val() + '</strong>');
 	});
 });
 
-function abrir_boleta_alcoholemia(codAten) {
+function abrir_boleta_alcoholemia(codAten, imprime) {
 	var ancho=600; var alto=720;
 	pagina='formularios/alcoholemia.php';
 	variables = "a="+codAten;
@@ -2139,31 +2138,32 @@ function abrir_boleta_alcoholemia(codAten) {
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('Boleta Alcoholemia', url);
 	var iurl = 's_guarda_alcoholemia_grado_lesion_dev.php';
-
-	var parametros = {
-		"imprime": "imprime",
-		"a": codAten
-	};
-	$.ajax({
-		data:  parametros,
-		url:   's_guarda_alcoholemia_grado_lesion_dev.php',
-		type:  'post',
-		beforeSend: function () {
-		  $("#resultado").html("Procesando, espere por favor...");
-		},
-		success:  function (response) {
-			if(response.trim() == 'error'){
-				msg = "Ocurrió un Error en la Consulta de Datos</div>";
-				$("#resultado").html(div_result+msg);
+	if(imprime == 0){
+		var parametros = {
+			"imprime": "imprime",
+			"a": codAten
+		};
+		$.ajax({
+			data:  parametros,
+			url:   's_guarda_alcoholemia_grado_lesion_dev.php',
+			type:  'post',
+			beforeSend: function () {
+			  $("#resultado").html("Procesando, espere por favor...");
+			},
+			success:  function (response) {
+				if(response.trim() == 'error'){
+					msg = "Ocurrió un Error en la Consulta de Datos</div>";
+					$("#resultado").html(div_result+msg);
+				}
+				if(response.trim() == 'Ok'){
+					$("#resultado").html("Datos Guardados exitosamente.");
+				}
+			}, 
+			error: function (){
+				alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
 			}
-			if(response.trim() == 'Ok'){
-				$("#resultado").html("Datos Guardados exitosamente.");
-			}
-		}, 
-		error: function (){
-			alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
-		} 			
-	});	
+		});
+	}
 }
 
  function obtiene_examen_observacion(origen) {
