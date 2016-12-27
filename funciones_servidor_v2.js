@@ -2013,7 +2013,8 @@ function guarda_alcoholemia_grado_lesion(lugar) {
 		"ee": codEstadoEtilico,
 		"nf": nroFrascoAlco,
 		"gl": codGradoLesion,
-		"a":  codAtencion						
+		"a":  codAtencion
+								
 	};
 	//console.log(parametros);
 	$.ajax({
@@ -2078,7 +2079,6 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		var condicion_transito = document.getElementById('condicion_transito').value;
 		var placa_policia = document.getElementById('placa_policia').value;
 		var observacionOH = document.getElementById('observacionOH').value;
-		var imprime_oh = document.getElementById('imprime_oh').value;
 		var tec_oh = document.getElementById('tec_oh').checked;
 		var drogas_oh = document.getElementById('drogas_oh').checked;
 		var rechaza_oh = document.getElementById('rechaza_oh').checked;
@@ -2099,8 +2099,7 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		"observacionOH": observacionOH,
 		"tec_oh": tec_oh,
 		"drogas_oh": drogas_oh,
-		"rechaza_oh": rechaza_oh,
-		"imprime_oh": imprime_oh
+		"rechaza_oh": rechaza_oh						
 	};
 	$.ajax({
 		data:  parametros,
@@ -2109,20 +2108,14 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		beforeSend: function () {
 		  $("#resultado").html("Procesando, espere por favor...");
 		},
-		success:  function (data) {
-			$("#resultado").html(data);
-			var obj = jQuery.parseJSON(data);
-			if(obj.message.trim() == 'ng' || obj.message.trim() == 'error'){
+		success:  function (response) {
+			if(response.trim() == 'ng' || response.trim() == 'error'){
 				msg = "Ocurrió un Error en la Consulta de Datos</div>";
 				$("#resultado").html(div_result+msg);
 			}
-			if(obj.message.trim() == 'exitsOk' || obj.message.trim() == 'Ok'){
+			if(response.trim() == 'exitsOk' || response.trim() == 'Ok'){
 				$("#resultado").html("Datos Guardados exitosamente.");
-				$("#nroFracoAlcoholemia").val(obj.id_oh);
 			}
-			if(obj.message.trim() == 'ErrorI'){
-					$("#resultado").html("Los datos de alcoholemia no pueden ser modificados una vez impreso el documento.");
-				}
 		}, 
 		error: function (){
 			alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
@@ -2130,62 +2123,7 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 	});	
 }
 
-$(document).ready(function(){
-	$('#imprime-alcoholemia').on('show.bs.modal', function(e) {
-	  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-	  $('.debug-url').html('Responsable: <strong>' + $("#cod_aten").val() + '</strong>');
-	});
-});
 
-function abrir_boleta_alcoholemia(codAten, imprime) {
-	var ancho=600; var alto=720;
-	pagina='formularios/alcoholemia.php';
-	variables = "a="+codAten;
-	configuracion = "KeepThis=true&TB_iframe=true&width="+ancho+"&height="+alto+"&modal=false";
-	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
-	tb_show('Boleta Alcoholemia', url);
-	var iurl = 's_guarda_alcoholemia_grado_lesion_dev.php';
-	if(imprime == 0){
-		var parametros = {
-			"imprime": "imprime",
-			"a": codAten
-		};
-		$.ajax({
-			data:  parametros,
-			url:   's_guarda_alcoholemia_grado_lesion_dev.php',
-			type:  'post',
-			beforeSend: function () {
-			  $("#resultado").html("Procesando, espere por favor...");
-			},
-			success:  function (data) {
-				var obj = jQuery.parseJSON(data);
-				if(obj.message.trim() == 'error'){
-					msg = "Ocurrió un Error en la Consulta de Datos</div>";
-					$("#resultado").html(div_result+msg);
-				}
-				else {
-					$("#imprime_oh").val("1");
-					$("#resultado").html(obj.message);
-					$("#accion_ver_imprimir").text("Ver");
-					$('#btn_guardar_alcoholemia').prop("disabled", true);
-					$('#unidad_policia').prop("disabled", true);
-					$('#parteOH').prop("disabled", true);
-					$('#placa_policia').prop("disabled", true);
-					$('#condicion_transito').prop("disabled", true);
-					$('#juzgado').prop("disabled", true);
-					$('#observacionOH').prop("disabled", true);
-					$('#tec_oh').prop("disabled", true);
-					$('#drogas_oh').prop("disabled", true);
-					$('#rechaza_oh').prop("disabled", true);
-					$('#estadoEtilico').prop("disabled", true);
-				}
-			}, 
-			error: function (){
-				alert('Error inesperado, al intentar registrar la indicacion, intente más tarde');
-			}
-		});
-	}
-}
 
  function obtiene_examen_observacion(origen) {
     if (origen=='fuera'){
@@ -2653,6 +2591,16 @@ function abrir_resultado_img(rut) {
 	configuracion = "KeepThis=true&TB_iframe=true&width="+ancho+"&height="+alto+"&modal=false";
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('s', url);
+}
+
+
+	function abrir_boleta_alcoholemia(codAten) {
+	var ancho=600; var alto=720;
+	pagina='/dau/vista/atencion/formularios/alcoholemia.php';
+	variables = "a="+codAten;
+	configuracion = "KeepThis=true&TB_iframe=true&width="+ancho+"&height="+alto+"&modal=false";
+	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
+	tb_show('Boleta Alcoholemia', url);
 }
 
 

@@ -3,9 +3,8 @@ include_once("conexion/conexion.php");
 
 $imprime = $_POST['imprime'];
 $cod_atencion = $_POST['a'];
-echo "Imprime: $imprime";
-echo "Atencion: $cod_atencion";
-
+$data['message'] = "";
+$data['id_oh'] = "";
 if($imprime == 'imprime'){
 	$consulta="SELECT * FROM eme_dau_atencion_alcoholemia WHERE fk_atencion= $cod_atencion";
 	$result_consulta=mysql_query($consulta) or die (mysql_error());
@@ -15,10 +14,12 @@ if($imprime == 'imprime'){
 		$resultado = mysql_query($sql0) or die(mysql_error());
 		if (!$resultado) {
 			mysql_close($con);
-			echo "error";
+			$data['message'] = "error";
+			echo json_encode($data);
 			return;
 		}
-		echo "Ok";
+		$data['message'] = "Ok";
+		echo json_encode($data);
 		return;
 	}
 }
@@ -33,56 +34,61 @@ $juzgado =  $_POST['juzgado'];
 $condicion_transito =  $_POST['condicion_transito'];
 $placa_policia =  $_POST['placa_policia'];
 $observacionOH =  $_POST['observacionOH'];
+$imprimeOH =  $_POST['imprime_oh'];
 $tec_oh =  $_POST['tec_oh'] == "false" ? 0 : 1;
 $drogas_oh =  $_POST['drogas_oh'] == "false" ? 0 : 1;
 $rechaza_oh =  $_POST['rechaza_oh'] == "false" ? 0 : 1;
 
 
-$fechahora = strftime( "%Y-%m-%d %H:%M:%S", time() );
-if($codEstadoEtilico != 0){
-	$consulta="select * from eme_dau_atencion_alcoholemia where fk_atencion=".$cod_atencion;
-	$result_consulta=mysql_query($consulta) or die (mysql_error());
-	if (mysql_num_rows($result_consulta)>0)
-	{
-		$sql0 = "UPDATE eme_dau_atencion_alcoholemia SET
-							cond_transito=$condicion_transito, tec=$tec_oh, drogas=$drogas_oh, rechaza=$rechaza_oh, placa_policia='$placa_policia', parte='$parte', comiseria='$unidad_policia', juzgado='$juzgado', observaciones='$observacionOH', fk_usr=$cod_user where fk_atencion = $cod_atencion";
+if( $imprimeOH == "0"){
+	$fechahora = strftime( "%Y-%m-%d %H:%M:%S", time() );
+	if($codEstadoEtilico != 0){
+		$consulta="select * from eme_dau_atencion_alcoholemia where fk_atencion=".$cod_atencion;
+		$result_consulta=mysql_query($consulta) or die (mysql_error());
+		if (mysql_num_rows($result_consulta)>0)
+		{
+			$sql0 = "UPDATE eme_dau_atencion_alcoholemia SET
+								cond_transito=$condicion_transito, tec=$tec_oh, drogas=$drogas_oh, rechaza=$rechaza_oh, placa_policia='$placa_policia', parte='$parte', comiseria='$unidad_policia', juzgado='$juzgado', observaciones='$observacionOH', fk_usr=$cod_user where fk_atencion = $cod_atencion";
 
 
-		file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
+			file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
 
-		$resultado = mysql_query($sql0) or die(mysql_error());
-		if (!$resultado) {
-			mysql_close($con);
-			echo "Error";
-			return;
+			$resultado = mysql_query($sql0) or die(mysql_error());
+			if (!$resultado) {
+				mysql_close($con);
+				$data['message'] = "Error";
+				echo json_encode($data);
+				return;
+			}
 		}
-		echo "exits";
+		else {
+			$sql0 = "INSERT INTO `eme_dau_atencion_alcoholemia`
+								(`fk_atencion`, `cond_transito`, `tec`, `drogas`, `rechaza`, `placa_policia`, `parte`, `comiseria`, `juzgado`, `observaciones`, `fk_usr`, `imprime`) 
+							VALUES 
+								('$cod_atencion', 
+								'$condicion_transito', 
+								'$tec_oh', 
+								'$drogas_oh', 
+								'$rechaza_oh', 
+								'$placa_policia', 
+								'$parte', 
+								'$unidad_policia',
+								'$juzgado', 
+								'$observacionOH',
+								'$cod_user', 0)";
+
+			file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
+
+			$resultado = mysql_query($sql0) or die(mysql_error());
+			if (!$resultado) {
+				mysql_close($con);
+				$data['message'] = "Error";
+				echo json_encode($data);
+				return;
+			}
+			$nroFrascoAlco = mysql_insert_id();
+		}	
 	}
-	else {
-		$sql0 = "INSERT INTO `eme_dau_atencion_alcoholemia`
-							(`fk_atencion`, `cond_transito`, `tec`, `drogas`, `rechaza`, `placa_policia`, `parte`, `comiseria`, `juzgado`, `observaciones`, `fk_usr`) 
-						VALUES 
-							('$cod_atencion', 
-							'$condicion_transito', 
-							'$tec_oh', 
-							'$drogas_oh', 
-							'$rechaza_oh', 
-							'$placa_policia', 
-							'$parte', 
-							'$unidad_policia',
-							'$juzgado', 
-							'$observacionOH',
-							'$cod_user')";
-
-		file_put_contents('prueba_alcoholemia.txt', $sql0."\n", FILE_APPEND);
-
-		$resultado = mysql_query($sql0) or die(mysql_error());
-		if (!$resultado) {
-			mysql_close($con);
-			echo "Error";
-			return;
-		}
-	}	
 }
 
 if($codGradoLesion != 0 || $codEstadoEtilico != 0){
@@ -111,11 +117,14 @@ if($codGradoLesion != 0 || $codEstadoEtilico != 0){
 	//echo "sql1: ".$sql1." ";
 
 	if (!$resultado) {
-		echo "ng";
 		mysql_close($con);
+		$data['message'] = "ng";
+		echo json_encode($data);
 		return;
 	}
 }
 mysql_close($con);
-echo "Ok";
+$data['message'] = ($imprimeOH == "0" ? "Ok" : "ErrorI");
+$data['id_oh'] = $nroFrascoAlco;
+echo json_encode($data);
 ?>
