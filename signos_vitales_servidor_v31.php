@@ -45,11 +45,11 @@ $codInst = $_GET['codInst'];
 		
 		
 		$(document).ready(function(){
-			$('#imprime-alcoholemia').on('show.bs.modal', function(e) {
-			  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-			  $('.debug-url').html('Responsable: <strong>' + $("#cod_aten").val() + '</strong>');
-			});
-		});
+	$('#imprime-alcoholemia').on('show.bs.modal', function(e) {
+	  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+	  $('.debug-url').html('Responsable: <strong>' + $("#cod_aten").val() + '</strong>');
+	});
+});
 
 		
 		function validacionCampoNumericoSimple(valor){
@@ -205,7 +205,7 @@ $codInst = $_GET['codInst'];
 						</div>
 						<div class="form-group col-sm-3">
 							<label for="nroFracoAlcoholemia" class="control-label">Nº frasco alcoholemia</label>
-							<input class="form-control" type="text" id="nroFracoAlcoholemia" value="<?php echo $idOH;?>" style="width: 100%" <?php if($codInst == 10){echo 'readonly'; } ?>/>
+							<input class="form-control" type="text" id="nroFracoAlcoholemia" value="<?php echo $idOH;?>" style="width: 100%" />
 						</div>
 						<div class="form-group col-sm-3">
 							<label for="parteOH" class="control-label">N° Parte:</label>

@@ -41,25 +41,31 @@ $codInst = 10;
 		<script src="funciones.js<?php echo '?'.rand();?>"></script>
 
 		<script>
-		function validacionCampoNumericoSimple(valor){
+			$(document).ready(function(){
+				$('#imprime-alcoholemia').on('show.bs.modal', function(e) {
+				  $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+				  $('.debug-url').html('Responsable: <strong>' + $("#cod_aten").val() + '</strong>');
+				});
+			});
+			function validacionCampoNumericoSimple(valor){
 
-			if( (valor == null) || (valor.length == 0) || ( /^\s+$/.test(valor) ) || (isNaN(valor)==true ) ) {
-				return false;
+				if( (valor == null) || (valor.length == 0) || ( /^\s+$/.test(valor) ) || (isNaN(valor)==true ) ) {
+					return false;
+				}
+				else{
+					return true;
+				}
 			}
-			else{
-				return true;
-			}
-		}
 
-		function validacionCampoTexto(valor){
+			function validacionCampoTexto(valor){
 
-			if( (valor == null) || (valor.length == 0) || ( /^\s+$/.test(valor) ) ) {
-				return false;
+				if( (valor == null) || (valor.length == 0) || ( /^\s+$/.test(valor) ) ) {
+					return false;
+				}
+				else{
+					return true;
+				}
 			}
-			else{
-				return true;
-			}
-		}
 		</script>
 	</head>
 		<body >
@@ -173,6 +179,7 @@ $codInst = 10;
 				<strong>Accidente y Alcoholemia:</strong>
 				<form id="sv_form" data-toggle="validator" role="form">
 					<input type="hidden" name="imprime_oh" id="imprime_oh" value="<?php echo $imprimeOH;?>"/>
+					<input type="hidden" name="cod_inst" id="cod_inst" value="<?php echo $codInst;?>"/>
 					<div class="form-inline row">
 						<div class="form-group col-sm-3">
 							<label for="estadoEtilico" class="control-label">Estado etílico:</label>
@@ -194,7 +201,7 @@ $codInst = 10;
 						</div>
 						<div class="form-group col-sm-3">
 							<label for="nroFracoAlcoholemia" class="control-label">Nº frasco alcoholemia</label>
-							<input class="form-control" type="text" id="nroFracoAlcoholemia" value="<?php echo $idOH;?>" style="width: 100%" readonly/>
+							<input class="form-control" type="text" id="nroFracoAlcoholemia" value="<?php echo $idOH;?>" style="width: 100%" <?php if($codInst == 10){echo 'readonly'; } ?>/>
 						</div>
 						<div class="form-group col-sm-3">
 							<label for="parteOH" class="control-label">N° Parte:</label>

@@ -607,10 +607,10 @@ function fn_dau_cerrado(){
 }
 
 
-function lanza_error(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e) {
+function lanza_error(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e,sospecha_ges_e) {
 	pagina='error.php';
 	variables = "cantErrores="+cantErrores+"&box="+box+"&condicionIngreso="+condicionIngreso+"&derivarA="+derivarA+"&destinoConsultante="+destinoConsultante;
-	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e;
+	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e+"&sospecha_ges_e="+sospecha_ges_e;
 	configuracion = "KeepThis=true&TB_iframe=true&width=300&height=300&modal=false";
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('Error finalizar atencion', url);
@@ -669,6 +669,8 @@ function validar_finalizar_atencion() {
 	var paridad_e="";
 	var derivacionCAE_e = "";	
 	var selectAuge_e=" ";
+	var sospecha_ges_e="";
+	
 	var iurl = 'valida_cierre.php?'+Math.random();
 
 		
@@ -798,7 +800,14 @@ function validar_finalizar_atencion() {
 					selectAuge_e='e';
 					//alert('falta auge');
 				}
-
+				/*
+				if(data["sospecha_ges"]==0){
+					hayErrores = hayErrores + 1;
+					sospecha_ges_e='e';					
+					window.frames[1].sospecha_ges.style.borderStyle="solid";
+					window.frames[1].sospecha_ges.style.borderColor='#F00'					
+				}	
+*/
 
 				
 
@@ -826,7 +835,7 @@ function validar_finalizar_atencion() {
 	
 				//COMPRUEBA QUE NO EXISTAN ERRORES
 				if(hayErrores > 0){
-					lanza_error(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e);
+					lanza_error(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e,sospecha_ges_e);
 				}else
 					finalizar_atencion();
 			}, 
@@ -1228,8 +1237,6 @@ function comprueba_permisos(usuario,institucion) {
 							window.frames[3].nroFracoAlcoholemia.disabled="";
 							window.frames[3].gradoLesion.disabled="";	 						
 						}
-						// if($("#cod_inst").val() == "10")window.frames[3].nroFracoAlcoholemia.disabled="disabled";
-						console.log("codigoInst: "+$("#cod_inst").val());
 					}
 
 					if (campos[i]==3){ // anamnesis
@@ -1505,6 +1512,7 @@ function valida_alta_post_tto(){
 	var paridad_e="";
 	var derivacionCAE_e = "";	
 	var selectAuge_e=" ";
+	var sospecha_ges_e="";
 	var iurl = 'valida_alta_post_tto.php?'+Math.random();
 
 		
@@ -1569,6 +1577,8 @@ function valida_alta_post_tto(){
 					hayErrores = hayErrores + 1;
 					derivarA_e='e';
 				}
+				
+							
 
 				
 				if (hayErrores>0){// si hay errores en la atencion medica visualizo el frame
@@ -1605,7 +1615,13 @@ function valida_alta_post_tto(){
 					selectAuge_e='e';
 					//alert('falta auge');
 				}
-
+				/*
+				if(data["sospecha_ges"]==0){
+					window.frames[1].sospecha_ges.style.borderColor='#F00';
+					hayErrores = hayErrores + 1;
+					sospecha_ges_e='e';
+				}
+				*/
 
 				var  dcc = window.frames[4].destino_consultante_consultorio;	
 				if( !(typeof dcc === 'undefined' || dcc === null) ){
@@ -1631,7 +1647,7 @@ function valida_alta_post_tto(){
 	
 				//COMPRUEBA QUE NO EXISTAN ERRORES
 				if(hayErrores > 0){
-					error_alta_post_tto(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e);
+					error_alta_post_tto(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e,sospecha_ges_e);
 				}else
 					alta_post_tto();
 			}, 
@@ -1737,10 +1753,10 @@ function alta_post_tto() {
 }
 
 
-function error_alta_post_tto(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e) {
+function error_alta_post_tto(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e,sospecha_ges_e) {
 	pagina='error.php';
 	variables = "cantErrores="+cantErrores+"&box="+box+"&condicionIngreso="+condicionIngreso+"&derivarA="+derivarA+"&destinoConsultante="+destinoConsultante;
-	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e;
+	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e+"&sospecha_ges_e="+sospecha_ges_e;
 	configuracion = "KeepThis=true&TB_iframe=true&width=300&height=300&modal=false";
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('Error al intentar registrar Alta Post Trantamiento', url);
@@ -2131,6 +2147,8 @@ function guarda_alcoholemia_grado_lesion_dev(lugar) {
 		} 			
 	});	
 }
+
+
 
 function abrir_boleta_alcoholemia(codAten, imprime) {
 	var ancho=600; var alto=720;
