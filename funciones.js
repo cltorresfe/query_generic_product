@@ -607,10 +607,10 @@ function fn_dau_cerrado(){
 }
 
 
-function lanza_error(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e) {
+function lanza_error(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e,sospecha_ges_e) {
 	pagina='error.php';
 	variables = "cantErrores="+cantErrores+"&box="+box+"&condicionIngreso="+condicionIngreso+"&derivarA="+derivarA+"&destinoConsultante="+destinoConsultante;
-	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e;
+	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e+"&sospecha_ges_e="+sospecha_ges_e;
 	configuracion = "KeepThis=true&TB_iframe=true&width=300&height=300&modal=false";
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('Error finalizar atencion', url);
@@ -653,6 +653,7 @@ function validar_finalizar_atencion() {
 	var derivarA = window.frames[1].derivar_a.value;
 	var destinoConsultante = window.frames[4].destino_consultante.value;
 	
+	var sospecha_ges=window.frames[1].sospecha_ges.value;
 	
 	var atencion=  document.getElementById('codAtencion').value;
 	var am=0;// 1 indica si hay error en pagina atencion medica
@@ -668,7 +669,8 @@ function validar_finalizar_atencion() {
 	var clasificacion_e="";
 	var paridad_e="";
 	var derivacionCAE_e = "";	
-	var selectAuge_e=" ";
+	var selectAuge_e="";
+	var sospecha_ges_e="";
 	var iurl = 'valida_cierre.php?'+Math.random();
 
 		
@@ -798,7 +800,19 @@ function validar_finalizar_atencion() {
 					selectAuge_e='e';
 					//alert('falta auge');
 				}
+				
+				
+				if (sospecha_ges == 0 ){
+					window.frames[1].sospecha_ges.style.borderStyle="solid";
+					window.frames[1].sospecha_ges.style.borderColor='#F00';
+					hayErrores = hayErrores + 1;
+					sospecha_ges_e='e';
+					
+				}
 
+				
+				
+				//alert(sospecha_ges);
 
 				
 
@@ -826,7 +840,7 @@ function validar_finalizar_atencion() {
 	
 				//COMPRUEBA QUE NO EXISTAN ERRORES
 				if(hayErrores > 0){
-					lanza_error(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e);
+					lanza_error(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e,sospecha_ges_e);
 				}else
 					finalizar_atencion();
 			}, 
@@ -1488,6 +1502,7 @@ function valida_alta_post_tto(){
 	var derivarA = window.frames[1].derivar_a.value;
 	var sospecha_ges = window.frames[1].sospecha_ges.value;
 	var destinoConsultante = window.frames[4].destino_consultante.value;
+	var sospecha_ges=window.frames[1].sospecha_ges.value;
 	
 	
 	var atencion=  document.getElementById('codAtencion').value;
@@ -1504,7 +1519,9 @@ function valida_alta_post_tto(){
 	var clasificacion_e="";
 	var paridad_e="";
 	var derivacionCAE_e = "";	
-	var selectAuge_e=" ";
+	var selectAuge_e="";
+	var sospecha_ges_e="";
+	
 	var iurl = 'valida_alta_post_tto.php?'+Math.random();
 
 		
@@ -1545,6 +1562,14 @@ function valida_alta_post_tto(){
 					}
 				}
 			
+				
+			
+				if (sospecha_ges == 0){
+					window.frames[1].sospecha_ges.style.borderColor='#F00';
+					hayErrores = hayErrores + 1;
+					sospecha_ges_e='e';
+				}
+				
 
 				if(data["diagnosticos"]==0){
 					window.frames[1].cie10.style.borderColor='#F00';
@@ -1605,6 +1630,8 @@ function valida_alta_post_tto(){
 					selectAuge_e='e';
 					//alert('falta auge');
 				}
+				
+				var validar_finalizar_e
 
 
 				var  dcc = window.frames[4].destino_consultante_consultorio;	
@@ -1631,7 +1658,7 @@ function valida_alta_post_tto(){
 	
 				//COMPRUEBA QUE NO EXISTAN ERRORES
 				if(hayErrores > 0){
-					error_alta_post_tto(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e);
+					error_alta_post_tto(hayErrores,box_e,condicionIngreso_e,derivarA_e,destinoConsultante_e,anamnesis_e,diagnosticos_e,solicitudes_pendientes_e,indicaciones_pendientes_e,clasificacion_e,paridad_e,derivacionCAE_e,selectAuge_e,sospecha_ges_e);
 				}else
 					alta_post_tto();
 			}, 
@@ -1737,10 +1764,11 @@ function alta_post_tto() {
 }
 
 
-function error_alta_post_tto(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e) {
+function error_alta_post_tto(cantErrores,box,condicionIngreso,derivarA,destinoConsultante,anamnesis,diagnosticos,solPendientes,indiPendientes,clasificacion,paridad,derivacionCAE,selectAuge_e,sospecha_ges_e) {
+	
 	pagina='error.php';
 	variables = "cantErrores="+cantErrores+"&box="+box+"&condicionIngreso="+condicionIngreso+"&derivarA="+derivarA+"&destinoConsultante="+destinoConsultante;
-	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e;
+	variables = variables + "&anamnesis="+anamnesis+"&diagnosticos="+diagnosticos+"&solPendientes="+solPendientes+"&indiPendientes="+indiPendientes+"&clasificacion="+clasificacion+"&paridad="+paridad+"&derivacionCAE="+derivacionCAE+"&selectAuge_e="+selectAuge_e+"&sospecha_ges_e="+sospecha_ges_e;
 	configuracion = "KeepThis=true&TB_iframe=true&width=300&height=300&modal=false";
 	url = pagina+"?"+variables+"&"+configuracion+"&"+Math.random();
 	tb_show('Error al intentar registrar Alta Post Trantamiento', url);
