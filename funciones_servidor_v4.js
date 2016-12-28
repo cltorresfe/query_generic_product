@@ -1242,9 +1242,8 @@ function comprueba_permisos(usuario,institucion) {
 							window.frames[3].nroFracoAlcoholemia.disabled="";
 							window.frames[3].gradoLesion.disabled="";	 						
 						}
-						if(institucion == "10"){
-							window.frames[3].estadoEtilico.disabled="disabled";
-						}
+						// if($("#cod_inst").val() == "10")window.frames[3].nroFracoAlcoholemia.disabled="disabled";
+						console.log("codigoInst: "+$("#cod_inst").val());
 					}
 
 					if (campos[i]==3){ // anamnesis
